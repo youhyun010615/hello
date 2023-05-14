@@ -77,8 +77,8 @@ public class Game extends Thread {
 	ArrayList<Enemy7Attack3> enemy7Attack3List = new ArrayList<Enemy7Attack3>();
 	private Enemy7 enemy7;
 	private Enemy7Attack enemy7Attack;
-	private Enemy7Attack enemy7Attack2;
-	private Enemy7Attack enemy7Attack3;
+	private Enemy7Attack2 enemy7Attack2;
+	private Enemy7Attack3 enemy7Attack3;
 
 	//문도
 	ArrayList<Enemy3> enemy3List = new ArrayList<Enemy3>();
@@ -328,7 +328,7 @@ public class Game extends Thread {
 				
 			}
 			
-			if(score >= 300 && score <= 1000) {
+			if(score >= 300 && score <= 1300) {
 				for(int j = 0; j < enemy7List.size(); j++) {
 					enemy7 = enemy7List.get(j);
 					if((playerAttack.x+playerAttack.width>enemy7.x&&playerAttack.x+playerAttack.width<enemy7.x+enemy7.width&&playerAttack.y+playerAttack.height>enemy7.y&&playerAttack.y+playerAttack.height<enemy7.y+enemy7.height)||(playerAttack.x+playerAttack.width>enemy7.x&&playerAttack.x+playerAttack.width<enemy7.x+enemy7.width&&playerAttack.y>enemy7.y&&playerAttack.y<enemy7.y+enemy7.height)) { //��Ʈ�ڽ� ����(��ǥ ������ �׻� ���� ���� ���� �𼭸�)
@@ -344,7 +344,7 @@ public class Game extends Thread {
 				
 			}
 			
-			if(score >= 1000 && score < 2000) {
+			if(score >= 1300 && score < 2300) {
 				for(int j = 0; j < enemy3List.size(); j++) {
 					enemy3 = enemy3List.get(j);
 					if((playerAttack.x+playerAttack.width>enemy3.x&&playerAttack.x+playerAttack.width<enemy3.x+enemy3.width&&playerAttack.y+playerAttack.height>enemy3.y&&playerAttack.y+playerAttack.height<enemy3.y+enemy3.height)||(playerAttack.x+playerAttack.width>enemy3.x&&playerAttack.x+playerAttack.width<enemy3.x+enemy3.width&&playerAttack.y>enemy3.y&&playerAttack.y<enemy3.y+enemy3.height)) { //��Ʈ�ڽ� ����(��ǥ ������ �׻� ���� ���� ���� �𼭸�)
@@ -361,7 +361,7 @@ public class Game extends Thread {
 				
 			}
 			
-			if(score >= 20000 && score < 2500) {
+			if(score >= 2300 && score < 2500) {
 				for(int j = 0; j < enemy4List.size(); j++) {
 					enemy4 = enemy4List.get(j);
 					if((playerAttack.x+playerAttack.width>enemy4.x&&playerAttack.x+playerAttack.width<enemy4.x+enemy4.width&&playerAttack.y+playerAttack.height>enemy4.y&&playerAttack.y+playerAttack.height<enemy4.y+enemy4.height)||(playerAttack.x+playerAttack.width>enemy4.x&&playerAttack.x+playerAttack.width<enemy4.x+enemy4.width&&playerAttack.y>enemy4.y&&playerAttack.y<enemy4.y+enemy4.height)) { //��Ʈ�ڽ� ����(��ǥ ������ �׻� ���� ���� ���� �𼭸�)
@@ -737,9 +737,11 @@ public class Game extends Thread {
 	private void enemy7MoveProcess() {
 		for(int i= 0; i<enemy7List.size(); i++) {
 			enemy7 = enemy7List.get(i);
+			if(enemy7.x >800)
 			enemy7.move(); //�� �̵�
 		}
 	}
+	
 	
 	private void enemy7AttackProcess() {
 		if(i % 80 == 0 && enemy7List.size() > 0) {
@@ -770,29 +772,28 @@ public class Game extends Thread {
 	
 	private void enemy7Attack2Process() {
 		if(Enemy3.isUltimate == true) {
-		if(i % 90 == 0 && enemy3List.size() > 0) {
-			for(int j = 0; j < enemy3List.size(); j++) {
-			enemy3Attack2 = new Enemy3Attack2((int)Math.random()*301 + 300, 720);
-			enemy3Attack2List.add(enemy3Attack2);
-			enemy3shot2sound.start();
+		if(i % 90 == 0 && enemy7List.size() > 0) {
+			for(int j = 0; j < enemy7List.size(); j++) {
+			enemy7Attack2 = new Enemy7Attack2((int)Math.random()*301 + 300, 720);
+			enemy7Attack2List.add(enemy7Attack2);
 			}
 		}
 		
-		if(i % 90 == 0 && enemy3List.size() > 0) {
-			for(int j = 0; j < enemy3List.size(); j++) {
-			enemy3Attack2 = new Enemy3Attack2((int)Math.random()*301+ 600, 720);
-			enemy3Attack2List.add(enemy3Attack2);
+		if(i % 90 == 0 && enemy7List.size() > 0) {
+			for(int j = 0; j < enemy7List.size(); j++) {
+			enemy7Attack2 = new Enemy7Attack2((int)Math.random()*301+ 600, 720);
+			enemy7Attack2List.add(enemy7Attack2);
 			}
 		}
 		
-		for(int i = 0; i < enemy3Attack2List.size(); i++) {
-			enemy3Attack2 = enemy3Attack2List.get(i);
-			enemy3Attack2.fire();
+		for(int i = 0; i < enemy7Attack2List.size(); i++) {
+			enemy7Attack2 = enemy7Attack2List.get(i);
+			enemy7Attack2.fire();
 			
-			if((playerX+playerWidth>enemy3Attack2.x&&playerX+playerWidth<enemy3Attack2.x+enemy3Attack2.width&&playerY+playerHeight>enemy3Attack2.y&&playerY+playerHeight<enemy3Attack2.y+enemy3Attack2.height)||(playerX+playerWidth>enemy3Attack2.x&&playerX+playerWidth<enemy3Attack2.x+enemy3Attack2.width&&playerY>enemy3Attack2.y&&playerY<enemy3Attack2.y+enemy3Attack2.height)) {
+			if((playerX+playerWidth>enemy7Attack2.x&&playerX+playerWidth<enemy7Attack2.x+enemy7Attack2.width&&playerY+playerHeight>enemy7Attack2.y&&playerY+playerHeight<enemy7Attack2.y+enemy7Attack2.height)||(playerX+playerWidth>enemy7Attack2.x&&playerX+playerWidth<enemy7Attack2.x+enemy7Attack2.width&&playerY>enemy7Attack2.y&&playerY<enemy7Attack2.y+enemy7Attack2.height)) {
 				hitsound.start();
-				playerHp -= enemy3Attack2.attack;
-				enemy3Attack2List.remove(enemy3Attack2);
+				playerHp -= enemy7Attack2.attack;
+				enemy7Attack2List.remove(enemy7Attack2);
 			}
 			
 	
@@ -803,22 +804,20 @@ public class Game extends Thread {
 }
 	
 	private void enemy7Attack3Process() {
-		if(playerX> 740 && enemy3Attack3List.size() == 0) {
-			enemy3Attack3 = new Enemy3Attack3(740, -100);
-			enemy3Attack3List.add(enemy3Attack3);
-			enemy3shot3sound.start();
+		if(playerX> 740 && enemy7Attack3List.size() == 0) {
+			enemy7Attack3 = new Enemy7Attack3(740, -100);
+			enemy7Attack3List.add(enemy7Attack3);
 			
 		}
-		if(playerX <= 740 && enemy3Attack3List.size() == 1) {
-			enemy3Attack3List.remove(enemy3Attack3);
-			enemy3shot3sound.stop();
+		if(playerX <= 740 && enemy7Attack3List.size() == 1) {
+			enemy7Attack3List.remove(enemy7Attack3);
 			
 		}
 		
 		if(playerX > 740) {
 			if(i % 30 == 0)
 			hitsound.start();
-			playerHp -= enemy3Attack3.attack;
+			playerHp -= enemy7Attack3.attack;
 			}
 		
 		
@@ -1217,6 +1216,15 @@ public class Game extends Thread {
 			enemy7Attack = enemy7AttackList.get(i);
 			g.drawImage(enemy7Attack.image, enemy7Attack.x, enemy7Attack.y, null);
 		}
+		for(int i = 0; i < enemy7Attack2List.size(); i++) {
+			enemy7Attack2 = enemy7Attack2List.get(i);
+			g.drawImage(enemy7Attack2.image, enemy7Attack2.x, enemy7Attack2.y, null);
+		}
+		for(int i = 0; i < enemy7Attack3List.size(); i++) {
+			enemy7Attack3 = enemy7Attack3List.get(i);
+			g.drawImage(enemy7Attack3.image, enemy7Attack3.x, enemy7Attack3.y, null);
+		}
+		
 		
 	}
 	
