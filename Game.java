@@ -7,12 +7,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
-
-import shoot.ShootingGame.KeyListener;
 
 public class Game extends Thread {
 	
@@ -30,16 +26,14 @@ public class Game extends Thread {
 	private boolean up, down, left, right; //움직이기 위해 변수 선언
 	private boolean shooting; //true일 경우 공격 발사
 	private boolean isOver; //게임오버 여부
-	private boolean skill; //스킬 사용 여부
-	private boolean onetimeUltimate = true; //isUltimate 한 번만 사용되게
 	
 	private Audio backgroundMusic,hitsound,killsound,enemykillsound,enemyshotsound,enemy2killsound,enemy2shotsound,enemy3killsound,enemy3shotsound,enemy3shot2sound,enemy3shot3sound,enemy3ultimatesound,enemy4killsound,enemy4shotsound,enemy6shotsound,enemy6shot2sound;
 	
-	public int score = 0; //점수를 나타낼 변수
+	private int score = 0; //점수를 나타낼 변수
 	
 	
 	int delta;
-	static int i,j,a = 1;
+	static int i,j = 1;
 	
 	
 	
@@ -49,25 +43,15 @@ public class Game extends Thread {
 	//플레이어의 공격을 담을 ArrayList(ArrayList의 사이즈는 가변이기 때문에 쓰기 좋음(사이즈 부족하면 자동으로 증가))
 	ArrayList<PlayerAttack> playerAttackList = new ArrayList<PlayerAttack>();
 	private PlayerAttack playerAttack; //ArrayList안의 내용에 쉽게 접근할 수 있게 변수 선언
-	ArrayList<PlayerAttackHitEffect> playerAttackHitEffectList = new ArrayList<PlayerAttackHitEffect>();
-	private PlayerAttackHitEffect playerAttackHitEffect;
-	
-	ArrayList<SkillAttack> skillAttackList = new ArrayList<SkillAttack>();
-	private SkillAttack skillAttack;
-	ArrayList<SkillHitEffect> skillHitEffectList = new ArrayList<SkillHitEffect>();
-	private SkillHitEffect skillHitEffect;
-	
 	//적의 이동과 적의 공격을 담을 ArrayList
 	ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
 	ArrayList<EnemyAttack> enemyAttackList = new ArrayList<EnemyAttack>();
 	private Enemy enemy;
 	private EnemyAttack enemyAttack;
-	
 	ArrayList<Enemy2> enemy2List = new ArrayList<Enemy2>();
 	ArrayList<Enemy2Attack> enemy2AttackList = new ArrayList<Enemy2Attack>();
 	private Enemy2 enemy2;
 	private Enemy2Attack enemy2Attack;
-	
 	ArrayList<Enemy3> enemy3List = new ArrayList<Enemy3>();
 	ArrayList<Enemy3Attack> enemy3AttackList = new ArrayList<Enemy3Attack>();
 	ArrayList<Enemy3Attack2> enemy3Attack2List = new ArrayList<Enemy3Attack2>();
@@ -82,14 +66,17 @@ public class Game extends Thread {
 	private Enemy4 enemy4;
 	private Enemy4Attack enemy4Attack;
 	
+	ArrayList<Enemy5> enemy5List = new ArrayList<Enemy5>();
+	ArrayList<Enemy5Attack> enemy5AttackList = new ArrayList<Enemy5Attack>();
+	private Enemy5 enemy5;
+	private Enemy5Attack enemy5Attack;
+	
 	ArrayList<Enemy6> enemy6List = new ArrayList<Enemy6>();
 	ArrayList<Enemy6Attack> enemy6AttackList = new ArrayList<Enemy6Attack>();
-	ArrayList<Enemy6EmptyAttack> enemy6EmptyAttackList = new ArrayList<Enemy6EmptyAttack>();
 	ArrayList<Enemy6Attack2> enemy6Attack2List = new ArrayList<Enemy6Attack2>();
 	ArrayList<Enemy6Warning> enemy6WarningList = new ArrayList<Enemy6Warning>();
 	private Enemy6 enemy6;
 	private Enemy6Attack enemy6Attack;
-	private Enemy6EmptyAttack enemy6EmptyAttack;
 	private Enemy6Attack2 enemy6Attack2;
 	private Enemy6Warning enemy6Warning;
 	
@@ -170,16 +157,27 @@ public class Game extends Thread {
 						enemy4List.clear();
 						enemy4AttackList.clear();
 						}
-					if(score>=1500) {
+					
+					if(score>=1500 && score < 1800) {
+						enemy5AppearProcess();
+						enemy5MoveProcess();
+						enemy5AttackProcess();
+					}
+					if(score==1800) {
+						enemy5List.clear();
+						enemy5AttackList.clear();
+						}
+					
+					if(score>=1800) {
 						enemy6AppearProcess();
 						enemy6MoveProcess();
 						enemy6AttackProcess();
 						enemy6Attack2Process();
 						
 					}
+					System.out.println(playerX + "  " + playerY + "  hp : " + playerHp);
 					i++; //공격속도 정하기 위해 만듦
 					delta = delta - (1000000000/60);
-
 				}
 				
 				
@@ -204,12 +202,6 @@ public class Game extends Thread {
 		enemy4AttackList.clear();
 		enemy6List.clear();
 		enemy6AttackList.clear();
-		enemy6Attack2List.clear();
-		enemy6WarningList.clear();
-		skillAttackList.clear();
-		skillHitEffectList.clear();
-		playerAttackHitEffectList.clear();
-		
 		playerHp = 100;
 		playerX = 10;
 		playerY = (Main.SCREEN_HEIGHT - playerHeight) / 2;
@@ -232,7 +224,7 @@ public class Game extends Thread {
 		//공격 속도를 0.2초로 설정
 		if (shooting == true && i % playerAttackSpeed == 0) {
 			if(score >= 1300) playerAttackSpeed = 10;
-			playerAttack = new PlayerAttack(playerX + 70,playerY + 20); //생성자 매개변수를 통해 공격 생성지점 설정
+			playerAttack = new PlayerAttack(playerX + 100,playerY - 30); //생성자 매개변수를 통해 공격 생성지점 설정
 			playerAttackList.add(playerAttack); //인덱스에 계속 추가하며 사이즈를 계속 늘려감(run()에서 keyProcess()가 빠르게 계속 돌기 때문)
 			
 		}
@@ -307,14 +299,6 @@ public class Game extends Thread {
 				for(int j = 0; j < enemy4List.size(); j++) {
 					enemy4 = enemy4List.get(j);
 					if((playerAttack.x+playerAttack.width>enemy4.x&&playerAttack.x+playerAttack.width<enemy4.x+enemy4.width&&playerAttack.y+playerAttack.height>enemy4.y&&playerAttack.y+playerAttack.height<enemy4.y+enemy4.height)||(playerAttack.x+playerAttack.width>enemy4.x&&playerAttack.x+playerAttack.width<enemy4.x+enemy4.width&&playerAttack.y>enemy4.y&&playerAttack.y<enemy4.y+enemy4.height)) { //히트박스 범위(좌표 기준은 항상 가장 좌측 위에 모서리)
-						playerAttackHitEffect = new PlayerAttackHitEffect(playerAttack.x, playerAttack.y);
-						playerAttackHitEffectList.add(playerAttackHitEffect);
-						Timer loadingTimer = new Timer();
-				        TimerTask loadingTask = new TimerTask() {
-				            @Override
-				            public void run() {playerAttackHitEffectList.remove(playerAttackHitEffect);}
-				        };
-				        loadingTimer.schedule(loadingTask, 150);
 						enemy4.hp -= playerAttack.attack; //에너지 깎음
 						playerAttackList.remove(playerAttack); //맞춘 공격 물체는 삭제
 					}
@@ -328,19 +312,27 @@ public class Game extends Thread {
 				
 			}
 			
-			if(score >= 1500) {
+			if(score >= 1500 && score < 1800) {
+				for(int j = 0; j < enemy5List.size(); j++) {
+					enemy5 = enemy5List.get(j);
+					if((playerAttack.x+playerAttack.width>enemy5.x&&playerAttack.x+playerAttack.width<enemy5.x+enemy5.width&&playerAttack.y+playerAttack.height>enemy5.y&&playerAttack.y+playerAttack.height<enemy5.y+enemy5.height)||(playerAttack.x+playerAttack.width>enemy5.x&&playerAttack.x+playerAttack.width<enemy5.x+enemy5.width&&playerAttack.y>enemy5.y&&playerAttack.y<enemy5.y+enemy5.height)) { //히트박스 범위(좌표 기준은 항상 가장 좌측 위에 모서리)
+						enemy5.hp -= playerAttack.attack; //에너지 깎음
+						playerAttackList.remove(playerAttack); //맞춘 공격 물체는 삭제
+					}
+					if(enemy5.hp <= 0) {
+						enemy5List.remove(enemy5);
+						score += 100;
+					}
+						
+				}
+				
+			}
+			
+			if(score >= 1800) {
 				
 				for(int j = 0; j < enemy6List.size(); j++) {
 					enemy6 = enemy6List.get(j);
 					if((playerAttack.x+playerAttack.width>enemy6.x&&playerAttack.x+playerAttack.width<enemy6.x+enemy6.width&&playerAttack.y+playerAttack.height>enemy6.y&&playerAttack.y+playerAttack.height<enemy6.y+enemy6.height)||(playerAttack.x+playerAttack.width>enemy6.x&&playerAttack.x+playerAttack.width<enemy6.x+enemy6.width&&playerAttack.y>enemy6.y&&playerAttack.y<enemy6.y+enemy6.height)) { //占쏙옙트占쌘쏙옙 占쏙옙占쏙옙(占쏙옙표 占쏙옙占쏙옙占쏙옙 占쌓삼옙 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏜서몌옙)
-						playerAttackHitEffect = new PlayerAttackHitEffect(playerAttack.x, playerAttack.y);
-						playerAttackHitEffectList.add(playerAttackHitEffect);
-						Timer loadingTimer = new Timer();
-				        TimerTask loadingTask = new TimerTask() {
-				            @Override
-				            public void run() {playerAttackHitEffectList.remove(playerAttackHitEffect);}
-				        };
-				        loadingTimer.schedule(loadingTask, 150);
 						enemy6.hp -= playerAttack.attack; 
 						playerAttackList.remove(playerAttack); 
 					}
@@ -353,152 +345,6 @@ public class Game extends Thread {
 				}
 			}
 		}
-		if(skill == true && i % 2 == 0 && skillAttackList.size() <= 50) {
-			skillAttack = new SkillAttack(20,(int)(Math.random()*700));
-			skillAttackList.add(skillAttack);
-		}
-
-		for(int i = 0; i < skillAttackList.size(); i++) {
-			skillAttack = skillAttackList.get(i);
-			skillAttack.fire();
-					
-		}
-		if(skillAttackList.size() >= 50) {
-			skill = false;
-		}
-		
-		for(int i=0; i < skillAttackList.size(); i++) {
-			skillAttack = skillAttackList.get(i); 
-			skillAttack.fire(); //공격 오른쪽으로 이동시키는 메소드
-			
-			//공격 판정
-			if(score <=100) {
-			for(int j = 0; j < enemyList.size(); j++) {
-				enemy = enemyList.get(j);
-				if((skillAttack.x+skillAttack.width>enemy.x&&skillAttack.x+skillAttack.width<enemy.x+enemy.width&&skillAttack.y+skillAttack.height>enemy.y&&skillAttack.y+skillAttack.height<enemy.y+enemy.height)||(skillAttack.x+skillAttack.width>enemy.x&&skillAttack.x+skillAttack.width<enemy.x+enemy.width&&skillAttack.y>enemy.y&&skillAttack.y<enemy.y+enemy.height)) { //히트박스 범위(좌표 기준은 항상 가장 좌측 위에 모서리)
-					skillHitEffect = new SkillHitEffect(skillAttack.x, skillAttack.y);
-					skillHitEffectList.add(skillHitEffect);
-					Timer loadingTimer = new Timer();
-			        TimerTask loadingTask = new TimerTask() {
-			            @Override
-			            public void run() {skillHitEffectList.remove(skillHitEffect);}
-			        };
-			        loadingTimer.schedule(loadingTask, 200);
-					enemy.hp -= skillAttack.attack; //에너지 깎음
-					skillAttackList.remove(skillAttack); //맞춘 공격 물체는 삭제
-				}
-				if(enemy.hp <= 0) {
-					enemykillsound.start();
-					enemyList.remove(enemy);
-					score += 100;
-				}
-					
-			}
-			}
-			if(score >= 200 && score <= 300) {
-				for(int j = 0; j < enemy2List.size(); j++) {
-					enemy2 = enemy2List.get(j);
-					if((skillAttack.x+skillAttack.width>enemy2.x&&skillAttack.x+skillAttack.width<enemy2.x+enemy2.width&&skillAttack.y+skillAttack.height>enemy2.y&&skillAttack.y+skillAttack.height<enemy2.y+enemy2.height)||(skillAttack.x+skillAttack.width>enemy2.x&&skillAttack.x+skillAttack.width<enemy2.x+enemy2.width&&skillAttack.y>enemy2.y&&skillAttack.y<enemy2.y+enemy2.height)) { //히트박스 범위(좌표 기준은 항상 가장 좌측 위에 모서리)
-						skillHitEffect = new SkillHitEffect(skillAttack.x, skillAttack.y);
-						skillHitEffectList.add(skillHitEffect);
-						Timer loadingTimer = new Timer();
-				        TimerTask loadingTask = new TimerTask() {
-				            @Override
-				            public void run() {skillHitEffectList.remove(skillHitEffect);}
-				        };
-				        loadingTimer.schedule(loadingTask, 200);
-						enemy2.hp -= skillAttack.attack; //에너지 깎음
-						skillAttackList.remove(skillAttack); //맞춘 공격 물체는 삭제
-					}
-					if(enemy2.hp <= 0) {
-						enemy2killsound.start();
-						enemy2List.remove(enemy2);
-						score += 100;
-					}
-						
-				}
-				
-			}
-			
-			if(score >= 300 && score < 1300) {
-				for(int j = 0; j < enemy3List.size(); j++) {
-					enemy3 = enemy3List.get(j);
-					if((skillAttack.x+skillAttack.width>enemy3.x&&skillAttack.x+skillAttack.width<enemy3.x+enemy3.width&&skillAttack.y+skillAttack.height>enemy3.y&&skillAttack.y+skillAttack.height<enemy3.y+enemy3.height)||(skillAttack.x+skillAttack.width>enemy3.x&&skillAttack.x+skillAttack.width<enemy3.x+enemy3.width&&skillAttack.y>enemy3.y&&skillAttack.y<enemy3.y+enemy3.height)) { //히트박스 범위(좌표 기준은 항상 가장 좌측 위에 모서리)
-						skillHitEffect = new SkillHitEffect(skillAttack.x, skillAttack.y);
-						skillHitEffectList.add(skillHitEffect);
-						Timer loadingTimer = new Timer();
-				        TimerTask loadingTask = new TimerTask() {
-				            @Override
-				            public void run() {skillHitEffectList.remove(skillHitEffect);}
-				        };
-				        loadingTimer.schedule(loadingTask, 200);
-						
-						enemy3.hp -= skillAttack.attack; //에너지 깎음
-						skillAttackList.remove(skillAttack); //맞춘 공격 물체는 삭제
-					}
-					if(enemy3.hp <= 0) {
-						enemy3killsound.start();
-						enemy3List.remove(enemy3);
-						score += 1000;
-					}
-						
-				}
-				
-			}
-			
-			if(score >= 1300 && score < 1500) {
-				for(int j = 0; j < enemy4List.size(); j++) {
-					enemy4 = enemy4List.get(j);
-					if((skillAttack.x+skillAttack.width>enemy4.x&&skillAttack.x+skillAttack.width<enemy4.x+enemy4.width&&skillAttack.y+skillAttack.height>enemy4.y&&skillAttack.y+skillAttack.height<enemy4.y+enemy4.height)||(skillAttack.x+skillAttack.width>enemy4.x&&skillAttack.x+skillAttack.width<enemy4.x+enemy4.width&&skillAttack.y>enemy4.y&&skillAttack.y<enemy4.y+enemy4.height)) { //히트박스 범위(좌표 기준은 항상 가장 좌측 위에 모서리)
-						skillHitEffect = new SkillHitEffect(skillAttack.x, skillAttack.y);
-						skillHitEffectList.add(skillHitEffect);
-						Timer loadingTimer = new Timer();
-				        TimerTask loadingTask = new TimerTask() {
-				            @Override
-				            public void run() {skillHitEffectList.remove(skillHitEffect);}
-				        };
-				        loadingTimer.schedule(loadingTask, 200);
-						enemy4.hp -= skillAttack.attack; //에너지 깎음
-						skillAttackList.remove(skillAttack); //맞춘 공격 물체는 삭제
-					}
-					if(enemy4.hp <= 0) {
-						enemy4killsound.start();
-						enemy4List.remove(enemy4);
-						score += 100;
-					}
-						
-				}
-				
-			}
-			
-			if(score >= 1500) {
-				
-				for(int j = 0; j < enemy6List.size(); j++) {
-					enemy6 = enemy6List.get(j);
-					if((skillAttack.x+skillAttack.width>enemy6.x&&skillAttack.x+skillAttack.width<enemy6.x+enemy6.width&&skillAttack.y+skillAttack.height>enemy6.y&&skillAttack.y+skillAttack.height<enemy6.y+enemy6.height)||(skillAttack.x+skillAttack.width>enemy6.x&&skillAttack.x+skillAttack.width<enemy6.x+enemy6.width&&skillAttack.y>enemy6.y&&skillAttack.y<enemy6.y+enemy6.height)) { //占쏙옙트占쌘쏙옙 占쏙옙占쏙옙(占쏙옙표 占쏙옙占쏙옙占쏙옙 占쌓삼옙 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏜서몌옙)
-						skillHitEffect = new SkillHitEffect(skillAttack.x, skillAttack.y);
-						skillHitEffectList.add(skillHitEffect);
-						Timer loadingTimer = new Timer();
-				        TimerTask loadingTask = new TimerTask() {
-				            @Override
-				            public void run() {skillHitEffectList.remove(skillHitEffect);}
-				        };
-				        loadingTimer.schedule(loadingTask, 200);
-						enemy6.hp -= skillAttack.attack; 
-						skillAttackList.remove(skillAttack); 
-					}
-					if(enemy6.hp <= 0) {
-						killsound.start();
-						enemy6List.remove(enemy6);
-						score += 1000;
-					}
-						
-				}
-			}
-		}
-		
-		
-			
 	}
 
 	//적의 등장 구현 (y좌표값이 1~620에서 랜덤 출현)
@@ -599,13 +445,6 @@ public class Game extends Thread {
 			enemy3List.add(enemy3);
 		}
 		
-		if(enemy3.hp <= 50 && onetimeUltimate == true) {
-			Enemy3.isUltimate = true;
-			enemy3ultimatesound.start();
-			enemy3.hp = 262;
-			onetimeUltimate = false; //onetimeUltimate로 if문이 한번만 실행되게 함
-		}
-		
 	}
 	
 	
@@ -639,7 +478,11 @@ public class Game extends Thread {
 			if(playerHp <= 0) {
 				isOver = true;
 			}
-			
+			if(enemy3.hp == 50) {
+				Enemy3.isUltimate = true;
+				enemy3ultimatesound.start();
+				enemy3.hp = 262;
+			}
 		}
 	}
 			
@@ -746,9 +589,52 @@ public class Game extends Thread {
 		
 	}
 	
+	private void enemy5AppearProcess() {
+		if(i % 160 == 0) {
+			enemy5 = new Enemy5(1120,(int)(Math.random()*476));
+			enemy5List.add(enemy5);
+		}
+	}
+	
+	
+	//적의 이동 구현
+	private void enemy5MoveProcess() {
+		for(int i= 0; i<enemy5List.size(); i++) {
+			enemy5 = enemy5List.get(i);
+			enemy5.move(); //적 이동
+		}
+	}
+	
+	private void enemy5AttackProcess() {
+		if((i % 90 == 0 || i % 100 == 0) && enemy5List.size() > 0) {
+			for(int j = 0; j < enemy5List.size(); j++) {
+			enemy5Attack = new Enemy5Attack(enemy5List.get(j).x - 100 , enemy5List.get(j).y + 75);
+			enemy5AttackList.add(enemy5Attack);
+			}
+		}
+		
+		for(int i = 0; i < enemy5AttackList.size(); i++) {
+			enemy5Attack = enemy5AttackList.get(i);
+			enemy5Attack.fire();
+			
+			if((enemy5Attack.x<playerX+playerWidth&&enemy5Attack.x>playerX&&enemy5Attack.y+enemy5Attack.height>playerY&&enemy5Attack.y+enemy5Attack.height<playerY+playerHeight)||(enemy5Attack.x<playerX+playerWidth&&enemy5Attack.x>playerX&&enemy5Attack.y>playerY&&enemy5Attack.y<playerY+playerHeight)) {
+				hitsound.start();
+				playerHp -= enemy5Attack.attack;
+				enemy5AttackList.remove(enemy5Attack);
+			}
+			if(playerHp <= 0) {
+				isOver = true;
+			}
+					
+			
+					
+		}
+		
+	}
+	
 	private void enemy6AppearProcess() {
 		if(enemy6List.size() == 0) {
-			enemy6 = new Enemy6(1200, 133);
+			enemy6 = new Enemy6(1120, 133);
 			enemy6List.add(enemy6);
 		}
 	}
@@ -761,53 +647,31 @@ public class Game extends Thread {
 	}
 	
 	private void enemy6AttackProcess() {
-		
-		if(i % 120 == 0 && enemy6List.size() > 0 ) {
-			
+		if(i % 120 == 0 && enemy6List.size() > 0 && enemy6WarningList.size() >= 1) {
 			for(int j = 0; j < enemy6List.size(); j++) {
-			enemy6Warning = new Enemy6Warning((int)(Math.random()*601), 0);
-			enemy6WarningList.add(enemy6Warning);
-			Timer loadingTimer = new Timer();
-	        TimerTask loadingTask = new TimerTask() {
-	            @Override
-	            public void run() {
-	            	enemy6WarningList.remove(enemy6Warning);
-	            }
-	        };
-	        loadingTimer.schedule(loadingTask, 700);
-			}
-		}
-		
-		if(i % 120 == 40 && enemy6List.size() > 0 && enemy6WarningList.size() >= 1) {
-			for(int j = 0; j < enemy6List.size(); j++) {
-			enemy6Attack = new Enemy6Attack(enemy6Warning.x, 0);
+			enemy6Attack = new Enemy6Attack((int)(Math.random()*801), 0);
 			enemy6AttackList.add(enemy6Attack);
 			enemy6shotsound.start();
 			
 			}
 		}
 		
-		if(i % 120 == 40 && enemy6List.size() > 0 && enemy6WarningList.size() >= 1) {
-			for(int j = 0; j < enemy6List.size(); j++) {
-			enemy6EmptyAttack = new Enemy6EmptyAttack(enemy6Warning.x, 0);
-			enemy6EmptyAttackList.add(enemy6EmptyAttack);
+		if(i % 120 == 60 && enemy6List.size() > 0 ) {
 			
+			for(int j = 0; j < enemy6List.size(); j++) {
+			enemy6Warning = new Enemy6Warning((int)(Math.random()*801), 0);
+			enemy6WarningList.add(enemy6Warning);
+			enemy6shotsound.start();
 			}
 		}
 		
-		if(i % 120 == 100  && enemy6AttackList.size() >= 1) {
-			enemy6AttackList.remove(enemy6Attack);
-		}
-		
-		for(int i = 0; i < enemy6EmptyAttackList.size(); i++) {
-			enemy6EmptyAttack = enemy6EmptyAttackList.get(i);
-			if(this.i % 120 <=105 && this.i % 120 >= 100 && enemy6EmptyAttackList.get(i).y <= 1440)
-			enemy6EmptyAttack.fire();
+		for(int i = 0; i < enemy6AttackList.size(); i++) {
+			enemy6Attack = enemy6AttackList.get(i);
 	
-			if((playerX+playerWidth/2>enemy6EmptyAttack.x&&playerX+10<enemy6EmptyAttack.x+enemy6EmptyAttack.width&&playerY+playerHeight>enemy6EmptyAttack.y&&playerY+playerHeight<enemy6EmptyAttack.y+enemy6EmptyAttack.height)||(playerX+playerWidth/2>enemy6EmptyAttack.x&&playerX+10<enemy6EmptyAttack.x+enemy6EmptyAttack.width&&playerY>enemy6EmptyAttack.y&&playerY<enemy6EmptyAttack.y+enemy6EmptyAttack.height)) {
+			if((enemy6Attack.x<playerX+playerWidth&&enemy6Attack.x>playerX&&enemy6Attack.y+enemy6Attack.height>playerY&&enemy6Attack.y+enemy6Attack.height<playerY+playerHeight)||(enemy6Attack.x<playerX+playerWidth&&enemy6Attack.x>playerX&&enemy6Attack.y>playerY&&enemy6Attack.y<playerY+playerHeight)) {
 				hitsound.start();
 				playerHp -= enemy6Attack.attack;
-				enemy6EmptyAttackList.remove(enemy6EmptyAttack);
+				enemy6AttackList.remove(enemy6Attack);
 			}
 			if(playerHp <= 0) {
 				isOver = true;
@@ -850,12 +714,13 @@ public class Game extends Thread {
 	 
 	//게임 화면에 플레이어 캐릭터 그리기
 	public void gameDraw(Graphics g) {
+		playerDraw(g);
 		enemyDraw(g);
 		enemy2Draw(g);
 		enemy3Draw(g);
 		enemy4Draw(g);
+		enemy5Draw(g);
 		enemy6Draw(g);
-		playerDraw(g);
 		infoDraw(g);
 	}
 
@@ -878,26 +743,9 @@ public class Game extends Thread {
 		g.fillRect(playerX - 1, playerY - 40, (int)(playerHp *2), 20);
 		
 		//공격 이미지 생성
-		
 		for(int i=0; i < playerAttackList.size(); i++) {
 			playerAttack = playerAttackList.get(i);
-			if(score < 1300)
 			g.drawImage(playerAttack.attackImage, playerAttack.x, playerAttack.y, null);
-			else if(score >= 1300)
-				g.drawImage(playerAttack.attackImage2, playerAttack.x, playerAttack.y, null);
-		}
-		
-		for(int i = 0; i < skillAttackList.size(); i++) {
-			skillAttack = skillAttackList.get(i);
-			g.drawImage(skillAttack.skillImage, skillAttack.x, skillAttack.y, null);
-		}
-		for(int i = 0; i < skillHitEffectList.size(); i++) {
-			skillHitEffect = skillHitEffectList.get(i);
-			g.drawImage(skillHitEffect.skillHitImage, skillHitEffect.hitx, skillHitEffect.hity, null);
-		}
-		for(int i = 0; i < playerAttackHitEffectList.size(); i++) {
-			playerAttackHitEffect = playerAttackHitEffectList.get(i);
-			g.drawImage(playerAttackHitEffect.playerAttackHitImage, playerAttackHitEffect.hitx, playerAttackHitEffect.hity, null);
 		}
 	}
 	
@@ -975,38 +823,38 @@ public class Game extends Thread {
 		
 	}
 	
+	public void enemy5Draw(Graphics g) {
+		for(int i= 0; i < enemy5List.size(); i++) {
+			enemy5 = enemy5List.get(i);
+			g.drawImage(enemy5.image, enemy5.x, enemy5.y, null);
+			g.setColor(Color.red);
+			g.fillRect(enemy5.x - 1, enemy5.y - 40, enemy5.hp *7, 20);
+			
+		}
+		for(int i = 0; i < enemy5AttackList.size(); i++) {
+			enemy5Attack = enemy5AttackList.get(i);
+			g.drawImage(enemy5Attack.image, enemy5Attack.x, enemy5Attack.y, null);
+		}
+		
+	}
+	
 	public void enemy6Draw(Graphics g) {
 		for(int i= 0; i < enemy6List.size(); i++) {
 			enemy6 = enemy6List.get(i);
 			g.drawImage(enemy6.image, enemy6.x, enemy6.y, null);
-			if(enemy6.hp >= 700) {
-				g.setColor(Color.black);
-				g.fillRect(enemy6.x - 1, enemy6.y - 40, 400, 20);
-			}
-			if(enemy6.hp >= 400 && enemy6.hp < 700) {
-				g.setColor(Color.gray);
-				g.fillRect(enemy6.x - 1, enemy6.y - 40, 400, 20);
-			}
-			if(enemy6.hp < 400) {
 			g.setColor(Color.red);
-			g.fillRect(enemy6.x - 1, enemy6.y - 40, (int)(enemy6.hp) , 20);
-			}
+			g.fillRect(enemy6.x - 1, enemy6.y - 40, enemy6.hp *7, 20);
 			
 		}
 		
 		for(int i = 0; i < enemy6AttackList.size(); i++) {
 			enemy6Attack = enemy6AttackList.get(i);
-			g.drawImage(enemy6Attack.image, enemy6Attack.x, enemy6Attack.y, null);
-		}
-		
-		for(int i = 0; i < enemy6EmptyAttackList.size(); i++) {
-			enemy6EmptyAttack = enemy6EmptyAttackList.get(i);
-			g.drawImage(enemy6EmptyAttack.image, enemy6EmptyAttack.x, enemy6EmptyAttack.y, null);
+			g.drawImage(enemy6Attack.image, enemy6Attack.x, enemy6WarningList.get(0).y, null);
 		}
 		
 		for(int i = 0; i < enemy6WarningList.size(); i++) {
 			enemy6Warning = enemy6WarningList.get(i);
-			g.drawImage(enemy6Warning.image, enemy6Warning.x, enemy6Warning.y, null);
+			g.drawImage(enemy6Warning.image, enemy6Warning.x, enemy6WarningList.get(0).y, null);
 		}
 		
 
@@ -1036,10 +884,6 @@ public class Game extends Thread {
 
 	public void setShooting(boolean shooting) {
 		this.shooting = shooting;
-	}
-
-	public void setSkill(boolean skill) {
-		this.skill = skill;
 	}
 	
 	
