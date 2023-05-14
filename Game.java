@@ -16,26 +16,26 @@ import shoot.ShootingGame.KeyListener;
 
 public class Game extends Thread {
 	
-	//ÇÃ·¹ÀÌ¾î ÀÌ¹ÌÁö
+	//ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½
 	private Image player = new ImageIcon("src/images/player.png").getImage();
 	
-	private int playerX, playerY; //ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ÁÂÇ¥
-	private int playerWidth = player.getWidth(null); //ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ °¡·Î±æÀÌ
-	private int playerHeight = player.getHeight(null); //ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ¼¼·Î±æÀÌ
-	private int playerSpeed = 10; //ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ÀÌµ¿ ¼Óµµ
-	private double playerHp = 30; //ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ Ã¼·Â
-	private int playerAttackSpeed = 20; //ÇÃ·¹ÀÌ¾î °ø°İ ¼Óµµ(³·À»¼ö·Ï Áõ°¡)
+	private int playerX, playerY; //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥
+	private int playerWidth = player.getWidth(null); //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±ï¿½ï¿½ï¿½
+	private int playerHeight = player.getHeight(null); //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±ï¿½ï¿½ï¿½
+	private int playerSpeed = 10; //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½Óµï¿½
+	private double playerHp = 30; //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½
+	private int playerAttackSpeed = 20; //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 	
 	
-	private boolean up, down, left, right; //¿òÁ÷ÀÌ±â À§ÇØ º¯¼ö ¼±¾ğ
-	private boolean shooting; //trueÀÏ °æ¿ì °ø°İ ¹ß»ç
-	private boolean isOver; //°ÔÀÓ¿À¹ö ¿©ºÎ
-	private boolean skill; //½ºÅ³ »ç¿ë ¿©ºÎ
-	private boolean onetimeUltimate = true; //isUltimate ÇÑ ¹ø¸¸ »ç¿ëµÇ°Ô
+	private boolean up, down, left, right; //ï¿½ï¿½ï¿½ï¿½ï¿½Ì±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	private boolean shooting; //trueï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½
+	private boolean isOver; //ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	private boolean skill; //ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	private boolean onetimeUltimate = true; //isUltimate ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ç°ï¿½
 	
 	private Audio backgroundMusic,hitsound,killsound,enemykillsound,enemyshotsound,enemy2killsound,enemy2shotsound,enemy3killsound,enemy3shotsound,enemy3shot2sound,enemy3shot3sound,enemy3ultimatesound,enemy4killsound,enemy4shotsound,enemy6shotsound,enemy6shot2sound;
 	
-	public int score = 0; //Á¡¼ö¸¦ ³ªÅ¸³¾ º¯¼ö
+	public int score = 0; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	
 	
 	int delta;
@@ -46,9 +46,9 @@ public class Game extends Thread {
 	
 	
 	
-	//ÇÃ·¹ÀÌ¾îÀÇ °ø°İÀ» ´ãÀ» ArrayList(ArrayListÀÇ »çÀÌÁî´Â °¡º¯ÀÌ±â ¶§¹®¿¡ ¾²±â ÁÁÀ½(»çÀÌÁî ºÎÁ·ÇÏ¸é ÀÚµ¿À¸·Î Áõ°¡))
+	//ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ArrayList(ArrayListï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½))
 	ArrayList<PlayerAttack> playerAttackList = new ArrayList<PlayerAttack>();
-	private PlayerAttack playerAttack; //ArrayList¾ÈÀÇ ³»¿ë¿¡ ½±°Ô Á¢±ÙÇÒ ¼ö ÀÖ°Ô º¯¼ö ¼±¾ğ
+	private PlayerAttack playerAttack; //ArrayListï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ë¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	ArrayList<PlayerAttackHitEffect> playerAttackHitEffectList = new ArrayList<PlayerAttackHitEffect>();
 	private PlayerAttackHitEffect playerAttackHitEffect;
 	
@@ -57,17 +57,30 @@ public class Game extends Thread {
 	ArrayList<SkillHitEffect> skillHitEffectList = new ArrayList<SkillHitEffect>();
 	private SkillHitEffect skillHitEffect;
 	
-	//ÀûÀÇ ÀÌµ¿°ú ÀûÀÇ °ø°İÀ» ´ãÀ» ArrayList
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ArrayList
+	//ìœ ë¯¸
 	ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
 	ArrayList<EnemyAttack> enemyAttackList = new ArrayList<EnemyAttack>();
 	private Enemy enemy;
 	private EnemyAttack enemyAttack;
 	
+	//ì´ì¦ˆë¦¬ì–¼
 	ArrayList<Enemy2> enemy2List = new ArrayList<Enemy2>();
 	ArrayList<Enemy2Attack> enemy2AttackList = new ArrayList<Enemy2Attack>();
 	private Enemy2 enemy2;
 	private Enemy2Attack enemy2Attack;
 	
+	//ëˆ„ëˆ„
+	ArrayList<Enemy7> enemy7List = new ArrayList<Enemy7>();
+	ArrayList<Enemy7Attack> enemy7AttackList = new ArrayList<Enemy7Attack>();
+	ArrayList<Enemy7Attack2> enemy7Attack2List = new ArrayList<Enemy7Attack2>();
+	ArrayList<Enemy7Attack3> enemy7Attack3List = new ArrayList<Enemy7Attack3>();
+	private Enemy7 enemy7;
+	private Enemy7Attack enemy7Attack;
+	private Enemy7Attack enemy7Attack2;
+	private Enemy7Attack enemy7Attack3;
+
+	//ë¬¸ë„
 	ArrayList<Enemy3> enemy3List = new ArrayList<Enemy3>();
 	ArrayList<Enemy3Attack> enemy3AttackList = new ArrayList<Enemy3Attack>();
 	ArrayList<Enemy3Attack2> enemy3Attack2List = new ArrayList<Enemy3Attack2>();
@@ -98,11 +111,11 @@ public class Game extends Thread {
 	private Enemy6Attack2 enemy6Attack2;
 	private Enemy6Warning enemy6Warning;
 	
-	//¾²·¹µå°¡ ½ÃÀÛÇÏ¸é(start()¸¦ ÅëÇØ) run() ¸Ş¼Òµå ½ÇÇà
+	//ï¿½ï¿½ï¿½ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½(start()ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) run() ï¿½Ş¼Òµï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void run() {
-		/*°ÔÀÓÀ» 60ÇÁ·¹ÀÓÀ¸·Î ¼³Á¤
-		  1/60ÃÊ¸¶´Ù À§Ä¡°¡ ¹Ù²î°Ô ¾Ë°í¸®ÁòÀ» Â®À½
-		  µ¨Å¸(Áö³­ ½Ã°£(¹Ğ¸®ÃÊ))ÀÇ °ªÀÌ 1000/60¹Ğ¸®ÃÊ°¡ µÉ ¶§ ¸¶´Ù 0À¸·Î ÃÊ±âÈ­ ÇÏ´Â ¹æ½Ä
+		/*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 60ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		  1/60ï¿½Ê¸ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ ï¿½Ë°ï¿½ï¿½ï¿½ï¿½ï¿½ Â®ï¿½ï¿½
+		  ï¿½ï¿½Å¸(ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½(ï¿½Ğ¸ï¿½ï¿½ï¿½))ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 1000/60ï¿½Ğ¸ï¿½ï¿½Ê°ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½
 		 */
 		long currentTime;
 		long lastTime = System.nanoTime();
@@ -128,7 +141,7 @@ public class Game extends Thread {
 		
 		reset();
 		while(true) {
-			while(!isOver) { //isOverÀÌ falseÀÏ µ¿¾È ¹«ÇÑ ·çÇÁ
+			while(!isOver) { //isOverï¿½ï¿½ falseï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 				currentTime = System.nanoTime();
 				delta += (currentTime - lastTime);
 				lastTime = currentTime;
@@ -153,47 +166,56 @@ public class Game extends Thread {
 						enemy2List.clear();
 						enemy2AttackList.clear();
 					}
-					if(score>=300 && score < 1300) {
+					if(score>=300 && score <=1300) {
+						enemy7AppearProcess();
+						enemy7MoveProcess();
+						enemy7AttackProcess();
+						}
+						if(score==1300) {
+							enemy7List.clear();
+							enemy7AttackList.clear();
+						}
+					if(score>=1300 && score < 2300) {
 					enemy3AppearProcess();
 					enemy3MoveProcess();
 					enemy3AttackProcess();
 					enemy3Attack2Process();
 					enemy3Attack3Process();
 					}
-					if(score==1300) {
+					if(score==2300) {
 						enemy3List.clear();
 						enemy3AttackList.clear();
 						enemy3Attack2List.clear();
 						enemy3Attack3List.clear();
 						}
-					if(score>=1300 && score < 1500) {
+					if(score>=2300 && score < 2500) {
 						enemy4AppearProcess();
 						enemy4MoveProcess();
 						enemy4AttackProcess();
 					}
-					if(score==1500) {
+					if(score==2500) {
 						enemy4List.clear();
 						enemy4AttackList.clear();
 						}
 					
-					if(score>=1500 && score < 1800) {
+					if(score>=2500 && score < 2800) {
 						enemy5AppearProcess();
 						enemy5MoveProcess();
 						enemy5AttackProcess();
 					}
-					if(score==1800) {
+					if(score==2800) {
 						enemy5List.clear();
 						enemy5AttackList.clear();
 						}
 					
-					if(score>=1800) {
+					if(score>=2800) {
 						enemy6AppearProcess();
 						enemy6MoveProcess();
 						enemy6AttackProcess();
 						enemy6Attack2Process();
 						
 					}
-					i++; //°ø°İ¼Óµµ Á¤ÇÏ±â À§ÇØ ¸¸µê
+					i++; //ï¿½ï¿½ï¿½İ¼Óµï¿½ ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 					delta = delta - (1000000000/60);
 
 				}
@@ -212,6 +234,8 @@ public class Game extends Thread {
 		enemyAttackList.clear();
 		enemy2List.clear();
 		enemy2AttackList.clear();
+		enemy7List.clear();
+		enemy7AttackList.clear();
 		enemy3List.clear();
 		enemy3AttackList.clear();
 		enemy3Attack2List.clear();
@@ -241,43 +265,43 @@ public class Game extends Thread {
 	
 	
 	
-	//»óÇÏÁÂ¿ì Á¶ÀÛ ¼³Á¤(Ã¢ ¹ÛÀ¸·Î Ä³¸¯ÅÍ°¡ ³ª°¡Áö ¾Êµµ·Ï Á¶°Çµµ Ãß°¡ÇÔ)
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Â¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(Ã¢ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Êµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Çµï¿½ ï¿½ß°ï¿½ï¿½ï¿½)
 	private void keyProcess() {
 		if (up == true && playerY - playerSpeed > 0) playerY -= playerSpeed;
 		if (down == true && playerY + playerHeight + playerSpeed < Main.SCREEN_HEIGHT) playerY += playerSpeed;
 		if (left == true && playerX - playerSpeed > 0) playerX -= playerSpeed;
 		if (right == true && playerX + playerWidth + playerSpeed < Main.SCREEN_WIDTH) playerX += playerSpeed;
-		//°ø°İ ¼Óµµ¸¦ 0.2ÃÊ·Î ¼³Á¤
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½ï¿½ï¿½ 0.2ï¿½Ê·ï¿½ ï¿½ï¿½ï¿½ï¿½
 		if (shooting == true && i % playerAttackSpeed == 0) {
 			if(score >= 1300) playerAttackSpeed = 10;
-			playerAttack = new PlayerAttack(playerX + 70,playerY + 20); //»ı¼ºÀÚ ¸Å°³º¯¼ö¸¦ ÅëÇØ °ø°İ »ı¼ºÁöÁ¡ ¼³Á¤
-			playerAttackList.add(playerAttack); //ÀÎµ¦½º¿¡ °è¼Ó Ãß°¡ÇÏ¸ç »çÀÌÁî¸¦ °è¼Ó ´Ã·Á°¨(run()¿¡¼­ keyProcess()°¡ ºü¸£°Ô °è¼Ó µ¹±â ¶§¹®)
+			playerAttack = new PlayerAttack(playerX + 70,playerY + 20); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+			playerAttackList.add(playerAttack); //ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½î¸¦ ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½(run()ï¿½ï¿½ï¿½ï¿½ keyProcess()ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 			
 		}
 	}
 	
-	/*¹Ø¿¡ ³ª¿À´Â ¹İº¹¹®µé¿¡ ´ëÇÑ ÀÌÇØ
-	  >¾²·¹µå·Î ÀÎÇØ ¸Ş¼ÒµåµéÀÌ ¸Å¿ì ºü¸£°Ô µ¹¾Æ°¡±â ¶§¹®¿¡
-	  for(int i=0; i < ¤±¤±¤±.size(); i++) {
-	  ¤±¤±¤±¤± = ¤±¤±¤±.get(i);
-	  ¸Ş¼Òµåµé
+	/*ï¿½Ø¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½İºï¿½ï¿½ï¿½ï¿½é¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	  >ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¼Òµï¿½ï¿½ï¿½ï¿½ ï¿½Å¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	  for(int i=0; i < ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.size(); i++) {
+	  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ = ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.get(i);
+	  ï¿½Ş¼Òµï¿½ï¿½
 	  }
-	  °°Àº ±¸Á¶¸¦ °¡Áø ³à¼®Àº ±×³É ¸ğµç iµé¿¡ ´ëÇØ ¸Ş¼ÒµåµéÀÌ ½ÇÇàµÈ´Ù°í »ı°¢ÇÏ¸é ÆíÇÏ´Ù
+	  ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½à¼®ï¿½ï¿½ ï¿½×³ï¿½ ï¿½ï¿½ï¿½ iï¿½é¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¼Òµï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È´Ù°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½
 	 */
 	
-	//°ø°İ ¾ÕÀ¸·Î ³ª°¡´Â°Å ±¸Çö
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½
 	private void playerAttackProcess() {
 		for(int i=0; i < playerAttackList.size(); i++) {
 			playerAttack = playerAttackList.get(i); 
-			playerAttack.fire(); //°ø°İ ¿À¸¥ÂÊÀ¸·Î ÀÌµ¿½ÃÅ°´Â ¸Ş¼Òµå
+			playerAttack.fire(); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½Ş¼Òµï¿½
 			
-			//°ø°İ ÆÇÁ¤
+			//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			if(score <=100) {
 			for(int j = 0; j < enemyList.size(); j++) {
 				enemy = enemyList.get(j);
-				if((playerAttack.x+playerAttack.width>enemy.x&&playerAttack.x+playerAttack.width<enemy.x+enemy.width&&playerAttack.y+playerAttack.height>enemy.y&&playerAttack.y+playerAttack.height<enemy.y+enemy.height)||(playerAttack.x+playerAttack.width>enemy.x&&playerAttack.x+playerAttack.width<enemy.x+enemy.width&&playerAttack.y>enemy.y&&playerAttack.y<enemy.y+enemy.height)) { //È÷Æ®¹Ú½º ¹üÀ§(ÁÂÇ¥ ±âÁØÀº Ç×»ó °¡Àå ÁÂÃø À§¿¡ ¸ğ¼­¸®)
-					enemy.hp -= playerAttack.attack; //¿¡³ÊÁö ±ğÀ½
-					playerAttackList.remove(playerAttack); //¸ÂÃá °ø°İ ¹°Ã¼´Â »èÁ¦
+				if((playerAttack.x+playerAttack.width>enemy.x&&playerAttack.x+playerAttack.width<enemy.x+enemy.width&&playerAttack.y+playerAttack.height>enemy.y&&playerAttack.y+playerAttack.height<enemy.y+enemy.height)||(playerAttack.x+playerAttack.width>enemy.x&&playerAttack.x+playerAttack.width<enemy.x+enemy.width&&playerAttack.y>enemy.y&&playerAttack.y<enemy.y+enemy.height)) { //ï¿½ï¿½Æ®ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ğ¼­¸ï¿½)
+					enemy.hp -= playerAttack.attack; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+					playerAttackList.remove(playerAttack); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 				}
 				if(enemy.hp <= 0) {
 					enemykillsound.start();
@@ -290,9 +314,9 @@ public class Game extends Thread {
 			if(score >= 200 && score <= 300) {
 				for(int j = 0; j < enemy2List.size(); j++) {
 					enemy2 = enemy2List.get(j);
-					if((playerAttack.x+playerAttack.width>enemy2.x&&playerAttack.x+playerAttack.width<enemy2.x+enemy2.width&&playerAttack.y+playerAttack.height>enemy2.y&&playerAttack.y+playerAttack.height<enemy2.y+enemy2.height)||(playerAttack.x+playerAttack.width>enemy2.x&&playerAttack.x+playerAttack.width<enemy2.x+enemy2.width&&playerAttack.y>enemy2.y&&playerAttack.y<enemy2.y+enemy2.height)) { //È÷Æ®¹Ú½º ¹üÀ§(ÁÂÇ¥ ±âÁØÀº Ç×»ó °¡Àå ÁÂÃø À§¿¡ ¸ğ¼­¸®)
-						enemy2.hp -= playerAttack.attack; //¿¡³ÊÁö ±ğÀ½
-						playerAttackList.remove(playerAttack); //¸ÂÃá °ø°İ ¹°Ã¼´Â »èÁ¦
+					if((playerAttack.x+playerAttack.width>enemy2.x&&playerAttack.x+playerAttack.width<enemy2.x+enemy2.width&&playerAttack.y+playerAttack.height>enemy2.y&&playerAttack.y+playerAttack.height<enemy2.y+enemy2.height)||(playerAttack.x+playerAttack.width>enemy2.x&&playerAttack.x+playerAttack.width<enemy2.x+enemy2.width&&playerAttack.y>enemy2.y&&playerAttack.y<enemy2.y+enemy2.height)) { //ï¿½ï¿½Æ®ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ğ¼­¸ï¿½)
+						enemy2.hp -= playerAttack.attack; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+						playerAttackList.remove(playerAttack); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 					}
 					if(enemy2.hp <= 0) {
 						enemy2killsound.start();
@@ -304,12 +328,28 @@ public class Game extends Thread {
 				
 			}
 			
-			if(score >= 300 && score < 1300) {
+			if(score >= 300 && score <= 1000) {
+				for(int j = 0; j < enemy7List.size(); j++) {
+					enemy7 = enemy7List.get(j);
+					if((playerAttack.x+playerAttack.width>enemy7.x&&playerAttack.x+playerAttack.width<enemy7.x+enemy7.width&&playerAttack.y+playerAttack.height>enemy7.y&&playerAttack.y+playerAttack.height<enemy7.y+enemy7.height)||(playerAttack.x+playerAttack.width>enemy7.x&&playerAttack.x+playerAttack.width<enemy7.x+enemy7.width&&playerAttack.y>enemy7.y&&playerAttack.y<enemy7.y+enemy7.height)) { //ï¿½ï¿½Æ®ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ğ¼­¸ï¿½)
+						enemy7.hp -= playerAttack.attack; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+						playerAttackList.remove(playerAttack); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+					}
+					if(enemy7.hp <= 0) {
+						enemy7List.remove(enemy7);
+						score += 100;
+					}
+						
+				}
+				
+			}
+			
+			if(score >= 1000 && score < 2000) {
 				for(int j = 0; j < enemy3List.size(); j++) {
 					enemy3 = enemy3List.get(j);
-					if((playerAttack.x+playerAttack.width>enemy3.x&&playerAttack.x+playerAttack.width<enemy3.x+enemy3.width&&playerAttack.y+playerAttack.height>enemy3.y&&playerAttack.y+playerAttack.height<enemy3.y+enemy3.height)||(playerAttack.x+playerAttack.width>enemy3.x&&playerAttack.x+playerAttack.width<enemy3.x+enemy3.width&&playerAttack.y>enemy3.y&&playerAttack.y<enemy3.y+enemy3.height)) { //È÷Æ®¹Ú½º ¹üÀ§(ÁÂÇ¥ ±âÁØÀº Ç×»ó °¡Àå ÁÂÃø À§¿¡ ¸ğ¼­¸®)
-						enemy3.hp -= playerAttack.attack; //¿¡³ÊÁö ±ğÀ½
-						playerAttackList.remove(playerAttack); //¸ÂÃá °ø°İ ¹°Ã¼´Â »èÁ¦
+					if((playerAttack.x+playerAttack.width>enemy3.x&&playerAttack.x+playerAttack.width<enemy3.x+enemy3.width&&playerAttack.y+playerAttack.height>enemy3.y&&playerAttack.y+playerAttack.height<enemy3.y+enemy3.height)||(playerAttack.x+playerAttack.width>enemy3.x&&playerAttack.x+playerAttack.width<enemy3.x+enemy3.width&&playerAttack.y>enemy3.y&&playerAttack.y<enemy3.y+enemy3.height)) { //ï¿½ï¿½Æ®ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ğ¼­¸ï¿½)
+						enemy3.hp -= playerAttack.attack; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+						playerAttackList.remove(playerAttack); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 					}
 					if(enemy3.hp <= 0) {
 						enemy3killsound.start();
@@ -321,10 +361,10 @@ public class Game extends Thread {
 				
 			}
 			
-			if(score >= 1300 && score < 1500) {
+			if(score >= 20000 && score < 2500) {
 				for(int j = 0; j < enemy4List.size(); j++) {
 					enemy4 = enemy4List.get(j);
-					if((playerAttack.x+playerAttack.width>enemy4.x&&playerAttack.x+playerAttack.width<enemy4.x+enemy4.width&&playerAttack.y+playerAttack.height>enemy4.y&&playerAttack.y+playerAttack.height<enemy4.y+enemy4.height)||(playerAttack.x+playerAttack.width>enemy4.x&&playerAttack.x+playerAttack.width<enemy4.x+enemy4.width&&playerAttack.y>enemy4.y&&playerAttack.y<enemy4.y+enemy4.height)) { //È÷Æ®¹Ú½º ¹üÀ§(ÁÂÇ¥ ±âÁØÀº Ç×»ó °¡Àå ÁÂÃø À§¿¡ ¸ğ¼­¸®)
+					if((playerAttack.x+playerAttack.width>enemy4.x&&playerAttack.x+playerAttack.width<enemy4.x+enemy4.width&&playerAttack.y+playerAttack.height>enemy4.y&&playerAttack.y+playerAttack.height<enemy4.y+enemy4.height)||(playerAttack.x+playerAttack.width>enemy4.x&&playerAttack.x+playerAttack.width<enemy4.x+enemy4.width&&playerAttack.y>enemy4.y&&playerAttack.y<enemy4.y+enemy4.height)) { //ï¿½ï¿½Æ®ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ğ¼­¸ï¿½)
 						playerAttackHitEffect = new PlayerAttackHitEffect(playerAttack.x, playerAttack.y);
 						playerAttackHitEffectList.add(playerAttackHitEffect);
 						Timer loadingTimer = new Timer();
@@ -333,8 +373,8 @@ public class Game extends Thread {
 				            public void run() {playerAttackHitEffectList.remove(playerAttackHitEffect);}
 				        };
 				        loadingTimer.schedule(loadingTask, 150);
-						enemy4.hp -= playerAttack.attack; //¿¡³ÊÁö ±ğÀ½
-						playerAttackList.remove(playerAttack); //¸ÂÃá °ø°İ ¹°Ã¼´Â »èÁ¦
+						enemy4.hp -= playerAttack.attack; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+						playerAttackList.remove(playerAttack); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 					}
 					if(enemy4.hp <= 0) {
 						enemy4killsound.start();
@@ -346,10 +386,10 @@ public class Game extends Thread {
 				
 			}
 			
-			if(score >= 1500 && score < 1800) {
+			if(score >= 2500 && score < 2800) {
 				for(int j = 0; j < enemy5List.size(); j++) {
 					enemy5 = enemy5List.get(j);
-					if((playerAttack.x+playerAttack.width>enemy5.x&&playerAttack.x+playerAttack.width<enemy5.x+enemy5.width&&playerAttack.y+playerAttack.height>enemy5.y&&playerAttack.y+playerAttack.height<enemy5.y+enemy5.height)||(playerAttack.x+playerAttack.width>enemy5.x&&playerAttack.x+playerAttack.width<enemy5.x+enemy5.width&&playerAttack.y>enemy5.y&&playerAttack.y<enemy5.y+enemy5.height)) { //È÷Æ®¹Ú½º ¹üÀ§(ÁÂÇ¥ ±âÁØÀº Ç×»ó °¡Àå ÁÂÃø À§¿¡ ¸ğ¼­¸®)
+					if((playerAttack.x+playerAttack.width>enemy5.x&&playerAttack.x+playerAttack.width<enemy5.x+enemy5.width&&playerAttack.y+playerAttack.height>enemy5.y&&playerAttack.y+playerAttack.height<enemy5.y+enemy5.height)||(playerAttack.x+playerAttack.width>enemy5.x&&playerAttack.x+playerAttack.width<enemy5.x+enemy5.width&&playerAttack.y>enemy5.y&&playerAttack.y<enemy5.y+enemy5.height)) { //ï¿½ï¿½Æ®ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ğ¼­¸ï¿½)
 						playerAttackHitEffect = new PlayerAttackHitEffect(playerAttack.x, playerAttack.y);
 						playerAttackHitEffectList.add(playerAttackHitEffect);
 						Timer loadingTimer = new Timer();
@@ -358,8 +398,8 @@ public class Game extends Thread {
 				            public void run() {playerAttackHitEffectList.remove(playerAttackHitEffect);}
 				        };
 				        loadingTimer.schedule(loadingTask, 150);
-						enemy5.hp -= playerAttack.attack; //¿¡³ÊÁö ±ğÀ½
-						playerAttackList.remove(playerAttack); //¸ÂÃá °ø°İ ¹°Ã¼´Â »èÁ¦
+						enemy5.hp -= playerAttack.attack; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+						playerAttackList.remove(playerAttack); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 					}
 					if(enemy5.hp <= 0) {
 						enemy5List.remove(enemy5);
@@ -370,7 +410,7 @@ public class Game extends Thread {
 				
 			}
 			
-			if(score >= 1800) {
+			if(score >= 2800) {
 				
 				for(int j = 0; j < enemy6List.size(); j++) {
 					enemy6 = enemy6List.get(j);
@@ -411,13 +451,13 @@ public class Game extends Thread {
 		
 		for(int i=0; i < skillAttackList.size(); i++) {
 			skillAttack = skillAttackList.get(i); 
-			skillAttack.fire(); //°ø°İ ¿À¸¥ÂÊÀ¸·Î ÀÌµ¿½ÃÅ°´Â ¸Ş¼Òµå
+			skillAttack.fire(); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½Ş¼Òµï¿½
 			
-			//°ø°İ ÆÇÁ¤
+			//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			if(score <=100) {
 			for(int j = 0; j < enemyList.size(); j++) {
 				enemy = enemyList.get(j);
-				if((skillAttack.x+skillAttack.width>enemy.x&&skillAttack.x+skillAttack.width<enemy.x+enemy.width&&skillAttack.y+skillAttack.height>enemy.y&&skillAttack.y+skillAttack.height<enemy.y+enemy.height)||(skillAttack.x+skillAttack.width>enemy.x&&skillAttack.x+skillAttack.width<enemy.x+enemy.width&&skillAttack.y>enemy.y&&skillAttack.y<enemy.y+enemy.height)) { //È÷Æ®¹Ú½º ¹üÀ§(ÁÂÇ¥ ±âÁØÀº Ç×»ó °¡Àå ÁÂÃø À§¿¡ ¸ğ¼­¸®)
+				if((skillAttack.x+skillAttack.width>enemy.x&&skillAttack.x+skillAttack.width<enemy.x+enemy.width&&skillAttack.y+skillAttack.height>enemy.y&&skillAttack.y+skillAttack.height<enemy.y+enemy.height)||(skillAttack.x+skillAttack.width>enemy.x&&skillAttack.x+skillAttack.width<enemy.x+enemy.width&&skillAttack.y>enemy.y&&skillAttack.y<enemy.y+enemy.height)) { //ï¿½ï¿½Æ®ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ğ¼­¸ï¿½)
 					skillHitEffect = new SkillHitEffect(skillAttack.x, skillAttack.y);
 					skillHitEffectList.add(skillHitEffect);
 					Timer loadingTimer = new Timer();
@@ -426,8 +466,8 @@ public class Game extends Thread {
 			            public void run() {skillHitEffectList.remove(skillHitEffect);}
 			        };
 			        loadingTimer.schedule(loadingTask, 200);
-					enemy.hp -= skillAttack.attack; //¿¡³ÊÁö ±ğÀ½
-					skillAttackList.remove(skillAttack); //¸ÂÃá °ø°İ ¹°Ã¼´Â »èÁ¦
+					enemy.hp -= skillAttack.attack; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+					skillAttackList.remove(skillAttack); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 				}
 				if(enemy.hp <= 0) {
 					enemykillsound.start();
@@ -440,7 +480,7 @@ public class Game extends Thread {
 			if(score >= 200 && score <= 300) {
 				for(int j = 0; j < enemy2List.size(); j++) {
 					enemy2 = enemy2List.get(j);
-					if((skillAttack.x+skillAttack.width>enemy2.x&&skillAttack.x+skillAttack.width<enemy2.x+enemy2.width&&skillAttack.y+skillAttack.height>enemy2.y&&skillAttack.y+skillAttack.height<enemy2.y+enemy2.height)||(skillAttack.x+skillAttack.width>enemy2.x&&skillAttack.x+skillAttack.width<enemy2.x+enemy2.width&&skillAttack.y>enemy2.y&&skillAttack.y<enemy2.y+enemy2.height)) { //È÷Æ®¹Ú½º ¹üÀ§(ÁÂÇ¥ ±âÁØÀº Ç×»ó °¡Àå ÁÂÃø À§¿¡ ¸ğ¼­¸®)
+					if((skillAttack.x+skillAttack.width>enemy2.x&&skillAttack.x+skillAttack.width<enemy2.x+enemy2.width&&skillAttack.y+skillAttack.height>enemy2.y&&skillAttack.y+skillAttack.height<enemy2.y+enemy2.height)||(skillAttack.x+skillAttack.width>enemy2.x&&skillAttack.x+skillAttack.width<enemy2.x+enemy2.width&&skillAttack.y>enemy2.y&&skillAttack.y<enemy2.y+enemy2.height)) { //ï¿½ï¿½Æ®ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ğ¼­¸ï¿½)
 						skillHitEffect = new SkillHitEffect(skillAttack.x, skillAttack.y);
 						skillHitEffectList.add(skillHitEffect);
 						Timer loadingTimer = new Timer();
@@ -449,8 +489,8 @@ public class Game extends Thread {
 				            public void run() {skillHitEffectList.remove(skillHitEffect);}
 				        };
 				        loadingTimer.schedule(loadingTask, 200);
-						enemy2.hp -= skillAttack.attack; //¿¡³ÊÁö ±ğÀ½
-						skillAttackList.remove(skillAttack); //¸ÂÃá °ø°İ ¹°Ã¼´Â »èÁ¦
+						enemy2.hp -= skillAttack.attack; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+						skillAttackList.remove(skillAttack); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 					}
 					if(enemy2.hp <= 0) {
 						enemy2killsound.start();
@@ -462,10 +502,34 @@ public class Game extends Thread {
 				
 			}
 			
-			if(score >= 300 && score < 1300) {
+			if(score >= 300 && score <= 1300) {
+				for(int j = 0; j < enemy7List.size(); j++) {
+					enemy7 = enemy7List.get(j);
+					if((skillAttack.x+skillAttack.width>enemy7.x&&skillAttack.x+skillAttack.width<enemy7.x+enemy7.width&&skillAttack.y+skillAttack.height>enemy7.y&&skillAttack.y+skillAttack.height<enemy7.y+enemy7.height)||(skillAttack.x+skillAttack.width>enemy7.x&&skillAttack.x+skillAttack.width<enemy7.x+enemy7.width&&skillAttack.y>enemy7.y&&skillAttack.y<enemy7.y+enemy7.height)) { //ï¿½ï¿½Æ®ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ğ¼­¸ï¿½)
+						skillHitEffect = new SkillHitEffect(skillAttack.x, skillAttack.y);
+						skillHitEffectList.add(skillHitEffect);
+						Timer loadingTimer = new Timer();
+				        TimerTask loadingTask = new TimerTask() {
+				            @Override
+				            public void run() {skillHitEffectList.remove(skillHitEffect);}
+				        };
+				        loadingTimer.schedule(loadingTask, 200);
+						enemy7.hp -= skillAttack.attack; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+						skillAttackList.remove(skillAttack); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+					}
+					if(enemy7.hp <= 0) {
+						enemy7List.remove(enemy7);
+						score += 100;
+					}
+						
+				}
+				
+			}
+			
+			if(score >= 1300 && score < 2300) {
 				for(int j = 0; j < enemy3List.size(); j++) {
 					enemy3 = enemy3List.get(j);
-					if((skillAttack.x+skillAttack.width>enemy3.x&&skillAttack.x+skillAttack.width<enemy3.x+enemy3.width&&skillAttack.y+skillAttack.height>enemy3.y&&skillAttack.y+skillAttack.height<enemy3.y+enemy3.height)||(skillAttack.x+skillAttack.width>enemy3.x&&skillAttack.x+skillAttack.width<enemy3.x+enemy3.width&&skillAttack.y>enemy3.y&&skillAttack.y<enemy3.y+enemy3.height)) { //È÷Æ®¹Ú½º ¹üÀ§(ÁÂÇ¥ ±âÁØÀº Ç×»ó °¡Àå ÁÂÃø À§¿¡ ¸ğ¼­¸®)
+					if((skillAttack.x+skillAttack.width>enemy3.x&&skillAttack.x+skillAttack.width<enemy3.x+enemy3.width&&skillAttack.y+skillAttack.height>enemy3.y&&skillAttack.y+skillAttack.height<enemy3.y+enemy3.height)||(skillAttack.x+skillAttack.width>enemy3.x&&skillAttack.x+skillAttack.width<enemy3.x+enemy3.width&&skillAttack.y>enemy3.y&&skillAttack.y<enemy3.y+enemy3.height)) { //ï¿½ï¿½Æ®ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ğ¼­¸ï¿½)
 						skillHitEffect = new SkillHitEffect(skillAttack.x, skillAttack.y);
 						skillHitEffectList.add(skillHitEffect);
 						Timer loadingTimer = new Timer();
@@ -475,8 +539,8 @@ public class Game extends Thread {
 				        };
 				        loadingTimer.schedule(loadingTask, 200);
 						
-						enemy3.hp -= skillAttack.attack; //¿¡³ÊÁö ±ğÀ½
-						skillAttackList.remove(skillAttack); //¸ÂÃá °ø°İ ¹°Ã¼´Â »èÁ¦
+						enemy3.hp -= skillAttack.attack; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+						skillAttackList.remove(skillAttack); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 					}
 					if(enemy3.hp <= 0) {
 						enemy3killsound.start();
@@ -488,10 +552,10 @@ public class Game extends Thread {
 				
 			}
 			
-			if(score >= 1300 && score < 1500) {
+			if(score >= 2300 && score < 2500) {
 				for(int j = 0; j < enemy4List.size(); j++) {
 					enemy4 = enemy4List.get(j);
-					if((skillAttack.x+skillAttack.width>enemy4.x&&skillAttack.x+skillAttack.width<enemy4.x+enemy4.width&&skillAttack.y+skillAttack.height>enemy4.y&&skillAttack.y+skillAttack.height<enemy4.y+enemy4.height)||(skillAttack.x+skillAttack.width>enemy4.x&&skillAttack.x+skillAttack.width<enemy4.x+enemy4.width&&skillAttack.y>enemy4.y&&skillAttack.y<enemy4.y+enemy4.height)) { //È÷Æ®¹Ú½º ¹üÀ§(ÁÂÇ¥ ±âÁØÀº Ç×»ó °¡Àå ÁÂÃø À§¿¡ ¸ğ¼­¸®)
+					if((skillAttack.x+skillAttack.width>enemy4.x&&skillAttack.x+skillAttack.width<enemy4.x+enemy4.width&&skillAttack.y+skillAttack.height>enemy4.y&&skillAttack.y+skillAttack.height<enemy4.y+enemy4.height)||(skillAttack.x+skillAttack.width>enemy4.x&&skillAttack.x+skillAttack.width<enemy4.x+enemy4.width&&skillAttack.y>enemy4.y&&skillAttack.y<enemy4.y+enemy4.height)) { //ï¿½ï¿½Æ®ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ğ¼­¸ï¿½)
 						skillHitEffect = new SkillHitEffect(skillAttack.x, skillAttack.y);
 						skillHitEffectList.add(skillHitEffect);
 						Timer loadingTimer = new Timer();
@@ -500,8 +564,8 @@ public class Game extends Thread {
 				            public void run() {skillHitEffectList.remove(skillHitEffect);}
 				        };
 				        loadingTimer.schedule(loadingTask, 200);
-						enemy4.hp -= skillAttack.attack; //¿¡³ÊÁö ±ğÀ½
-						skillAttackList.remove(skillAttack); //¸ÂÃá °ø°İ ¹°Ã¼´Â »èÁ¦
+						enemy4.hp -= skillAttack.attack; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+						skillAttackList.remove(skillAttack); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 					}
 					if(enemy4.hp <= 0) {
 						enemy4killsound.start();
@@ -513,10 +577,10 @@ public class Game extends Thread {
 				
 			}
 			
-			if(score >= 1500 && score < 1800) {
+			if(score >= 2500 && score < 2800) {
 				for(int j = 0; j < enemy5List.size(); j++) {
 					enemy5 = enemy5List.get(j);
-					if((skillAttack.x+skillAttack.width>enemy5.x&&skillAttack.x+skillAttack.width<enemy5.x+enemy5.width&&skillAttack.y+skillAttack.height>enemy5.y&&skillAttack.y+skillAttack.height<enemy5.y+enemy5.height)||(skillAttack.x+skillAttack.width>enemy5.x&&skillAttack.x+skillAttack.width<enemy5.x+enemy5.width&&skillAttack.y>enemy5.y&&skillAttack.y<enemy5.y+enemy5.height)) { //È÷Æ®¹Ú½º ¹üÀ§(ÁÂÇ¥ ±âÁØÀº Ç×»ó °¡Àå ÁÂÃø À§¿¡ ¸ğ¼­¸®)
+					if((skillAttack.x+skillAttack.width>enemy5.x&&skillAttack.x+skillAttack.width<enemy5.x+enemy5.width&&skillAttack.y+skillAttack.height>enemy5.y&&skillAttack.y+skillAttack.height<enemy5.y+enemy5.height)||(skillAttack.x+skillAttack.width>enemy5.x&&skillAttack.x+skillAttack.width<enemy5.x+enemy5.width&&skillAttack.y>enemy5.y&&skillAttack.y<enemy5.y+enemy5.height)) { //ï¿½ï¿½Æ®ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ğ¼­¸ï¿½)
 						skillHitEffect = new SkillHitEffect(skillAttack.x, skillAttack.y);
 						skillHitEffectList.add(skillHitEffect);
 						Timer loadingTimer = new Timer();
@@ -525,8 +589,8 @@ public class Game extends Thread {
 				            public void run() {skillHitEffectList.remove(skillHitEffect);}
 				        };
 				        loadingTimer.schedule(loadingTask, 200);
-						enemy5.hp -= skillAttack.attack; //¿¡³ÊÁö ±ğÀ½
-						skillAttackList.remove(skillAttack); //¸ÂÃá °ø°İ ¹°Ã¼´Â »èÁ¦
+						enemy5.hp -= skillAttack.attack; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+						skillAttackList.remove(skillAttack); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 					}
 					if(enemy5.hp <= 0) {
 						
@@ -538,7 +602,7 @@ public class Game extends Thread {
 				
 			}
 			
-			if(score >= 1500) {
+			if(score >= 2800) {
 				
 				for(int j = 0; j < enemy6List.size(); j++) {
 					enemy6 = enemy6List.get(j);
@@ -568,7 +632,7 @@ public class Game extends Thread {
 			
 	}
 
-	//ÀûÀÇ µîÀå ±¸Çö (yÁÂÇ¥°ªÀÌ 1~620¿¡¼­ ·£´ı ÃâÇö)
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (yï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ 1~620ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 	private void enemyAppearProcess() {
 		if(i % 160 == 0) {
 			enemy = new Enemy(1120,(int)(Math.random()*476));
@@ -577,20 +641,20 @@ public class Game extends Thread {
 	}
 	
 	
-	//ÀûÀÇ ÀÌµ¿ ±¸Çö
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
 	private void enemyMoveProcess() {
 		for(int i= 0; i<enemyList.size(); i++) {
 			enemy = enemyList.get(i);
-			enemy.move(); //Àû ÀÌµ¿
+			enemy.move(); //ï¿½ï¿½ ï¿½Ìµï¿½
 				
 		}
 	}
 	
-	//ÀûÀÇ °ø°İ ±¸Çö
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	private void enemyAttackProcess() {
-		if(i % 100 == 0 && enemyList.size() > 0) { //enemyList.size() > 0 ÀûÀº ÀÌÀ¯ : °ø°İÀÌ Àû À§Ä¡ ±âÁØÀ¸·Î ³ª¿À±â ¶§¹®¿¡ ÀûÀÌ ³ª¿À±â Àü¿¡ °ø°İÀÌ ³ª¿À¸é ¿À·ù°¡ ¹ß»ıÇÑ´Ù
-			for(int j = 0; j < enemyList.size(); j++) { //enemyAttackList¿¡ Àû °³Ã¼ ¼ö¸¸Å­ enemyAttackÀ» Ãß°¡ÇÏ±â À§ÇØ ¹İº¹¹® Ãß°¡
-			enemyAttack = new EnemyAttack(enemyList.get(j).x - 79, enemyList.get(j).y + 35); //Àû °³Ã¼ ¼ö°¡ ¿©·¯ ¸¶¸®ÀÏ ¶§ EnemyAttack »ı¼º ÁÂÇ¥¸¦ enemy.x, enemy.y·Î µÎ¸é ¸¶Áö¸·¿¡ ³ª¿Â Àû¿¡°Ô¼­ EnemyAttackÀÌ ÁßÃ¸À¸·Î ³ª¿Â´Ù. »ı¼º ÁÂÇ¥¸¦ enemyListÀÇ °¢ ÀÎµ¦½º ¸¶´ÙÀÇ xyÁÂÇ¥·Î µÖ¾ß ÀûÀÌ EnemyAttackÀ» °¢°¢ ÇÏ³ª¾¿ ³¯¸°´Ù. 
+		if(i % 100 == 0 && enemyList.size() > 0) { //enemyList.size() > 0 ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½Ñ´ï¿½
+			for(int j = 0; j < enemyList.size(); j++) { //enemyAttackListï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½Å­ enemyAttackï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½İºï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+			enemyAttack = new EnemyAttack(enemyList.get(j).x - 79, enemyList.get(j).y + 35); //ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ EnemyAttack ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ enemy.x, enemy.yï¿½ï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ EnemyAttackï¿½ï¿½ ï¿½ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â´ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ enemyListï¿½ï¿½ ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ xyï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½Ö¾ï¿½ ï¿½ï¿½ï¿½ï¿½ EnemyAttackï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½. 
 			enemyAttackList.add(enemyAttack);
 			enemyshotsound.start();
 			}
@@ -624,11 +688,11 @@ public class Game extends Thread {
 	}
 	
 	
-	//ÀûÀÇ ÀÌµ¿ ±¸Çö
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
 	private void enemy2MoveProcess() {
 		for(int i= 0; i<enemy2List.size(); i++) {
 			enemy2 = enemy2List.get(i);
-			enemy2.move(); //Àû ÀÌµ¿
+			enemy2.move(); //ï¿½ï¿½ ï¿½Ìµï¿½
 		}
 	}
 	
@@ -660,6 +724,105 @@ public class Game extends Thread {
 		
 	}
 	
+	//ëˆ„ëˆ„
+	private void enemy7AppearProcess() {
+		if(i % 160 == 0) {
+			enemy7 = new Enemy7(1120,(int)(Math.random()*476));
+			enemy7List.add(enemy7);
+		}
+	}
+	
+	
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
+	private void enemy7MoveProcess() {
+		for(int i= 0; i<enemy7List.size(); i++) {
+			enemy7 = enemy7List.get(i);
+			enemy7.move(); //ï¿½ï¿½ ï¿½Ìµï¿½
+		}
+	}
+	
+	private void enemy7AttackProcess() {
+		if(i % 80 == 0 && enemy7List.size() > 0) {
+			for(int j = 0; j < enemy7List.size(); j++) {
+			enemy7Attack = new Enemy7Attack(enemy7List.get(j).x - 100 , enemy7List.get(j).y + 75);
+			enemy7AttackList.add(enemy7Attack);
+			}
+		}
+		
+		for(int i = 0; i < enemy7AttackList.size(); i++) {
+			enemy7Attack = enemy7AttackList.get(i);
+			enemy7Attack.fire();
+			
+			if((enemy7Attack.x<playerX+playerWidth&&enemy7Attack.x>playerX&&enemy7Attack.y+enemy7Attack.height>playerY&&enemy7Attack.y+enemy7Attack.height<playerY+playerHeight)||(enemy7Attack.x<playerX+playerWidth&&enemy7Attack.x>playerX&&enemy7Attack.y>playerY&&enemy7Attack.y<playerY+playerHeight)) {
+				hitsound.start();
+				playerHp -= enemy7Attack.attack;
+				enemy7AttackList.remove(enemy7Attack);
+			}
+			if(playerHp <= 0) {
+				isOver = true;
+			}
+					
+			
+					
+		}
+		
+	}
+	
+	private void enemy7Attack2Process() {
+		if(Enemy3.isUltimate == true) {
+		if(i % 90 == 0 && enemy3List.size() > 0) {
+			for(int j = 0; j < enemy3List.size(); j++) {
+			enemy3Attack2 = new Enemy3Attack2((int)Math.random()*301 + 300, 720);
+			enemy3Attack2List.add(enemy3Attack2);
+			enemy3shot2sound.start();
+			}
+		}
+		
+		if(i % 90 == 0 && enemy3List.size() > 0) {
+			for(int j = 0; j < enemy3List.size(); j++) {
+			enemy3Attack2 = new Enemy3Attack2((int)Math.random()*301+ 600, 720);
+			enemy3Attack2List.add(enemy3Attack2);
+			}
+		}
+		
+		for(int i = 0; i < enemy3Attack2List.size(); i++) {
+			enemy3Attack2 = enemy3Attack2List.get(i);
+			enemy3Attack2.fire();
+			
+			if((playerX+playerWidth>enemy3Attack2.x&&playerX+playerWidth<enemy3Attack2.x+enemy3Attack2.width&&playerY+playerHeight>enemy3Attack2.y&&playerY+playerHeight<enemy3Attack2.y+enemy3Attack2.height)||(playerX+playerWidth>enemy3Attack2.x&&playerX+playerWidth<enemy3Attack2.x+enemy3Attack2.width&&playerY>enemy3Attack2.y&&playerY<enemy3Attack2.y+enemy3Attack2.height)) {
+				hitsound.start();
+				playerHp -= enemy3Attack2.attack;
+				enemy3Attack2List.remove(enemy3Attack2);
+			}
+			
+	
+			
+		}
+}
+
+}
+	
+	private void enemy7Attack3Process() {
+		if(playerX> 740 && enemy3Attack3List.size() == 0) {
+			enemy3Attack3 = new Enemy3Attack3(740, -100);
+			enemy3Attack3List.add(enemy3Attack3);
+			enemy3shot3sound.start();
+			
+		}
+		if(playerX <= 740 && enemy3Attack3List.size() == 1) {
+			enemy3Attack3List.remove(enemy3Attack3);
+			enemy3shot3sound.stop();
+			
+		}
+		
+		if(playerX > 740) {
+			if(i % 30 == 0)
+			hitsound.start();
+			playerHp -= enemy3Attack3.attack;
+			}
+		
+		
+	}
 	private void enemy3AppearProcess() {
 		if(enemy3List.size() == 0) {
 			enemy3 = new Enemy3(1120, 133);
@@ -670,18 +833,18 @@ public class Game extends Thread {
 			Enemy3.isUltimate = true;
 			enemy3ultimatesound.start();
 			enemy3.hp = 262;
-			onetimeUltimate = false; //onetimeUltimate·Î if¹®ÀÌ ÇÑ¹ø¸¸ ½ÇÇàµÇ°Ô ÇÔ
+			onetimeUltimate = false; //onetimeUltimateï¿½ï¿½ ifï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½ï¿½
 		}
 		
 	}
 	
 	
-	//ÀûÀÇ ÀÌµ¿ ±¸Çö
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
 	private void enemy3MoveProcess() {
 		for(int i= 0; i<enemy3List.size(); i++) {
 			enemy3 = enemy3List.get(i);
 			if(enemy3.x >800)
-			enemy3.move(); //Àû ÀÌµ¿
+			enemy3.move(); //ï¿½ï¿½ ï¿½Ìµï¿½
 		}
 	}
 	
@@ -777,11 +940,11 @@ public class Game extends Thread {
 	}
 	
 	
-	//ÀûÀÇ ÀÌµ¿ ±¸Çö
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
 	private void enemy4MoveProcess() {
 		for(int i= 0; i<enemy4List.size(); i++) {
 			enemy4 = enemy4List.get(i);
-			enemy4.move(); //Àû ÀÌµ¿
+			enemy4.move(); //ï¿½ï¿½ ï¿½Ìµï¿½
 		}
 	}
 	
@@ -814,18 +977,18 @@ public class Game extends Thread {
 	}
 	
 	private void enemy5AppearProcess() {
-		if(i % 160 == 0) {
+		if(i % 100 == 0) {
 			enemy5 = new Enemy5(1120,(int)(Math.random()*476));
 			enemy5List.add(enemy5);
 		}
 	}
 	
 	
-	//ÀûÀÇ ÀÌµ¿ ±¸Çö
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
 	private void enemy5MoveProcess() {
 		for(int i= 0; i<enemy5List.size(); i++) {
 			enemy5 = enemy5List.get(i);
-			enemy5.move(); //Àû ÀÌµ¿
+			enemy5.move(); //ï¿½ï¿½ ï¿½Ìµï¿½
 		}
 	}
 	
@@ -958,10 +1121,11 @@ public class Game extends Thread {
 
 	 
 	 
-	//°ÔÀÓ È­¸é¿¡ ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ±×¸®±â
+	//ï¿½ï¿½ï¿½ï¿½ È­ï¿½é¿¡ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½
 	public void gameDraw(Graphics g) {
 		enemyDraw(g);
 		enemy2Draw(g);
+		enemy7Draw(g);
 		enemy3Draw(g);
 		enemy4Draw(g);
 		enemy5Draw(g);
@@ -982,13 +1146,13 @@ public class Game extends Thread {
 		
 	}
 	
-	//ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ÀÌ¹ÌÁö ±×¸®±â
+	//ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½
 	public void playerDraw(Graphics g) {
 		g.drawImage(player,  playerX, playerY, null);
 		g.setColor(Color.GREEN);
 		g.fillRect(playerX - 1, playerY - 40, (int)(playerHp *2), 20);
 		
-		//°ø°İ ÀÌ¹ÌÁö »ı¼º
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		
 		for(int i=0; i < playerAttackList.size(); i++) {
 			playerAttack = playerAttackList.get(i);
@@ -1037,6 +1201,21 @@ public class Game extends Thread {
 		for(int i = 0; i < enemy2AttackList.size(); i++) {
 			enemy2Attack = enemy2AttackList.get(i);
 			g.drawImage(enemy2Attack.image, enemy2Attack.x, enemy2Attack.y, null);
+		}
+		
+	}
+	//ëˆ„ëˆ„
+	public void enemy7Draw(Graphics g) {
+		for(int i= 0; i < enemy7List.size(); i++) {
+			enemy7 = enemy7List.get(i);
+			g.drawImage(enemy7.image, enemy7.x, enemy7.y, null);
+			g.setColor(Color.red);
+			g.fillRect(enemy7.x - 1, enemy7.y - 40, enemy7.hp *7, 20);
+			
+		}
+		for(int i = 0; i < enemy7AttackList.size(); i++) {
+			enemy7Attack = enemy7AttackList.get(i);
+			g.drawImage(enemy7Attack.image, enemy7Attack.x, enemy7Attack.y, null);
 		}
 		
 	}
@@ -1143,7 +1322,7 @@ public class Game extends Thread {
 		
 	}
 
-	//up, down, left, right°¡ privateÀÌ±â ¶§¹®¿¡ setter¸¦ ÀÌ¿ëÇÔ
+	//up, down, left, rightï¿½ï¿½ privateï¿½Ì±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ setterï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½ï¿½
 	public void setUp(boolean up) {
 		this.up = up;
 	}
