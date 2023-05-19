@@ -14,31 +14,27 @@ import javax.swing.JFrame;
 import Main.*;
 
 public class ShootingGame extends JFrame {
-	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (1-2)
+	//´õºí ¹öÆÛ¸µÀ» »ç¿ëÇÏ±â À§ÇØ ¼±¾ğ (1-2)
 	private Image bufferImage;
 	private Graphics screenGraphic;
+	
 	private Game game = new Game();
 	
-	
-
-	
-	//ï¿½ï¿½ï¿½ï¿½È­ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ (1-3)
+	//¸ŞÀÎÈ­¸é ÀÌ¹ÌÁö (1-3)
 	private Image mainScreen = new ImageIcon("src/images/main_screen.gif").getImage();
 	private Image loadingScreen = new ImageIcon("src/images/loading_screen.gif").getImage();
 	private Image gameScreen = new ImageIcon("src/images/game_screen.gif").getImage();
 	private Image potionImage = new ImageIcon("src/images/potion.png").getImage();
 	private int potionCount = 4;
-
 	
-	//ï¿½î¶² È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(trueï¿½ï¿½ È­ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½)
+	//¾î¶² È­¸é ¶ç¿ïÁö ¿©ºÎ(trueÀÎ È­¸éÀÌ ¶ß°Ô ¸¸µé°Å)
 	private boolean isMainScreen = false, isLoadingScreen = false, isGameScreen = false;
 	
 	private Audio backgroundMusic;
 	
 	GamePanel gamePanel = new GamePanel();
-	public int p;
 	
-	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½) (1-1)
+	//°ÔÀÓ ÇÁ·¹ÀÓ Àâ±â(»ı¼ºÀÚ) (1-1)
 	public ShootingGame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		setResizable(false); 
@@ -56,9 +52,9 @@ public class ShootingGame extends JFrame {
 	
 	}
 
-	//ï¿½Î°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ş¼Òµï¿½
+	//ÀÎ°ÔÀÓ ½ÃÀÛÇßÀ» ¶§ ¸Ş¼Òµå
 	public void GameStart () {
-		//ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ isGameScreenï¿½ï¿½ trueï¿½ï¿½ ï¿½ï¿½
+		//°ÔÀÓ È­¸éÀ» ¶ç¿ì±â À§ÇØ isGameScreen¸¸ true·Î ÇÔ
 		isLoadingScreen = true;
 		remove(gamePanel);
 		setSize(1280,720);
@@ -72,62 +68,60 @@ public class ShootingGame extends JFrame {
             	isMainScreen = true;
         		isLoadingScreen = false;
         		
-        		addKeyListener(new KeyListener()); //ï¿½ï¿½ï¿½ï¿½ keyListener ï¿½ß°ï¿½ï¿½Ï±ï¿½(ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½)
+        		addKeyListener(new KeyListener()); //¸¸µç keyListener Ãß°¡ÇÏ±â(Á¶ÀÛ °¡´ÉÇÏ°Ô)
         		
         		backgroundMusic = new Audio("src/audio/mainback.wav",true);
         		backgroundMusic.start();
             }
         };
-        loadingTimer.schedule(loadingTask, 3000); // 3ï¿½ï¿½ ï¿½Ä¿ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        loadingTimer.schedule(loadingTask, 3000); // 3ÃÊ ÈÄ¿¡ ·ÎµùÀÌ ³¡³²
 		
 	}
 	
 	public void GameStart2 () {
-		//ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ isGameScreenï¿½ï¿½ trueï¿½ï¿½ ï¿½ï¿½
+		//°ÔÀÓ È­¸éÀ» ¶ç¿ì±â À§ÇØ isGameScreen¸¸ true·Î ÇÔ
 		isMainScreen = false;
 		isGameScreen = true;
 		
 		backgroundMusic.stop();
 		
-		game.start(); //Game Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ run() È£ï¿½ï¿½
+		game.start(); //Game Å¬·¡½º¿¡¼­ ¸¸µç run() È£Ãâ
 	}
 	
 	
-	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ (1-4)
+	//´õºí ¹öÆÛ¸µÀ» »ç¿ëÇÏ¿© ¸ŞÀÎÈ­¸é Ãâ·Â (1-4)
 	public void paint(Graphics g) {
-		bufferImage = createImage(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT); //È­ï¿½ï¿½ Å©ï¿½â¸¸ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-		screenGraphic = bufferImage.getGraphics(); //screenGraphicï¿½ï¿½ bufferImageï¿½ï¿½ Graphics ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Ş¤ï¿½ï¿½ï¿½
-		screenDraw(screenGraphic); //screenGraphicï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½×¸ï¿½(ï¿½×¸ï¿½ï¿½ï¿½ ï¿½Ø¿ï¿½ public void screenDraw(Graphics g)ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½)
-		g.drawImage(bufferImage, 0, 0, null); //ï¿½ï¿½ï¿½Ì´ï¿½ È­ï¿½é¿¡ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+		bufferImage = createImage(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT); //È­¸é Å©±â¸¸ÇÑ ÀÌ¹ÌÁö ¸¸µê
+		screenGraphic = bufferImage.getGraphics(); //screenGraphicÀÌ bufferImageÀÇ Graphics °´Ã¼¸¦ ¹Ş¤·¹Ç
+		screenDraw(screenGraphic); //screenGraphic¿¡ ±×¸²À» ±×¸²(±×¸²Àº ¹Ø¿¡ public void screenDraw(Graphics g)¿¡¼­ ±×¸²)
+		g.drawImage(bufferImage, 0, 0, null); //º¸ÀÌ´Â È­¸é¿¡ ±×¸²À» Ãâ·Â
 	}
 	
 	public void screenDraw(Graphics g) {
-		if(isMainScreen == true) {//ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		if(isMainScreen == true) {//¸ŞÀÎ È­¸é ¶ç¿ì±â
 			g.drawImage(mainScreen, 0, 0, null);
 			this.repaint();
 		}
-		else if(isGameScreen == true) { //ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-			g.drawImage(gameScreen, 0, 0, null);
+		else if(isGameScreen == true) { //°ÔÀÓ È­¸é ¶ç¿ì±â
+			g.drawImage(gameScreen, 0, 0, null); //¹è°æ ¤Å¤·±â¼­ ¹Ù²Ş
 			game.gameDraw(g);
 			for (int i = 0; i < potionCount; i++) {
-				int x = 10 + (i * 30);
-				int y = 10;
-				g.drawImage(potionImage, x, y, null);
+				g.drawImage(potionImage, 270 + (i * 30), 45, null);
 			}
-
 			this.repaint();
 		}
-		else if(isLoadingScreen == true) { //ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		else if(isLoadingScreen == true) { //°ÔÀÓ È­¸é ¶ç¿ì±â
 			g.drawImage(loadingScreen, 0, 0, null);
 			this.repaint();
 		}
 		
 	}
 	
+	int p=0; //Æ÷¼Ç °³¼ö Á¦ÇÑ
 
-	//Å° ï¿½Ô·ï¿½ ï¿½Ş±ï¿½
+	//Å° ÀÔ·Â ¹Ş±â
 	class KeyListener extends KeyAdapter { 
-		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+		//´©¸£°í ÀÖÀ» ¶§
 		public void keyPressed(KeyEvent e) {
 			switch(e.getKeyCode()) {
 				case KeyEvent.VK_W:
@@ -149,33 +143,33 @@ public class ShootingGame extends JFrame {
 				case KeyEvent.VK_SPACE:
 					game.setShooting(true);
 					break;
-				case KeyEvent.VK_ENTER: //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾î°¨
+				case KeyEvent.VK_ENTER: //¿£ÅÍ ´©¸£¸é °ÔÀÓ È­¸éÀ¸·Î ³Ñ¾î°¨
 					GameStart2();
 					break;
-				case KeyEvent.VK_ESCAPE: //ESCï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(1-5)
+				case KeyEvent.VK_ESCAPE: //ESC´©¸£¸é Á¾·á(1-5)
 					System.exit(0);
 					break;
 				case KeyEvent.VK_1:
 					game.setSkill(true);
 					break;
 				case KeyEvent.VK_2:
-					if(p < 4 &&game.playerHp<100) {
+					if(p < 4 && game.playerHp < 100) {
 						if(game.playerHp > 50)
 							game.playerHp = 100;
 						else
-							game.playerHp +=50;
-						p++;
-						potionCount--; // í¬ì…˜ ê°œìˆ˜ ê°ì†Œ
+							game.playerHp += 50;
+					p++;
+					potionCount--; // Æ÷¼Ç °³¼ö °¨¼Ò
 
-						if (potionCount == 0) {
-							gamePanel.removeKeyListener(this); // KeyListener ë¹„í™œì„±í™”
-						}
+					if (potionCount == 0) {
+						gamePanel.removeKeyListener(this); // KeyListener ºñÈ°¼ºÈ­
+					}
 					}
 					break;
 			}
 			
 		}
-		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+		//¶®À» ¶§
 		public void keyReleased(KeyEvent e) {
 			switch(e.getKeyCode()) {
 				case KeyEvent.VK_W:
@@ -196,11 +190,17 @@ public class ShootingGame extends JFrame {
 				case KeyEvent.VK_1:
 					break;
 				case KeyEvent.VK_2:
-		               break;
-				
-	}
+					break;
+			}
 			
 			
 		}
 	}
 }
+
+
+
+
+
+
+
