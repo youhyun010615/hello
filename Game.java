@@ -111,12 +111,14 @@ public class Game extends Thread {
 	ArrayList<Enemy8Attack> enemy8AttackList = new ArrayList<Enemy8Attack>();
 	ArrayList<Enemy8Attack2> enemy8Attack2List = new ArrayList<Enemy8Attack2>();
 	ArrayList<Enemy8Attack3> enemy8Attack3List = new ArrayList<Enemy8Attack3>();
+	ArrayList<Enemy8Attack4> enemy8Attack4List = new ArrayList<Enemy8Attack4>();
 	ArrayList<Enemy8EmptyAttack> enemy8EmptyAttackList = new ArrayList<Enemy8EmptyAttack>();
 	ArrayList<Enemy8Warning> enemy8WarningList = new ArrayList<Enemy8Warning>();
 	private Enemy8 enemy8;
 	private Enemy8Attack enemy8Attack;
 	private Enemy8Attack2 enemy8Attack2;
 	private Enemy8Attack3 enemy8Attack3;
+	private Enemy8Attack4 enemy8Attack4;
 	private Enemy8EmptyAttack enemy8EmptyAttack;
 	private Enemy8Warning enemy8Warning;
 	
@@ -234,6 +236,7 @@ public class Game extends Thread {
 					enemy8AttackProcess();
 					enemy8Attack2Process();
 					enemy8Attack3Process();
+					enemy8Attack4Process();
 					
 					
 					System.out.println(Math.sin(Math.toRadians(45)));	
@@ -281,6 +284,7 @@ public class Game extends Thread {
 		enemy8AttackList.clear();
 		enemy8Attack2List.clear();
 		enemy8Attack3List.clear();
+		enemy8Attack4List.clear();
 		enemy8WarningList.clear();
 		skillAttackList.clear();
 		
@@ -1024,7 +1028,7 @@ public class Game extends Thread {
 		
 		for(int i = 0; i < enemy5AttackList.size(); i++) {
 			enemy5Attack = enemy5AttackList.get(i);
-			enemy5Attack.move();
+			enemy5Attack.fire();
 			
 			if((enemy5Attack.x<playerX+playerWidth&&enemy5Attack.x>playerX&&enemy5Attack.y+enemy5Attack.height>playerY&&enemy5Attack.y+enemy5Attack.height<playerY+playerHeight)||(enemy5Attack.x<playerX+playerWidth&&enemy5Attack.x>playerX&&enemy5Attack.y>playerY&&enemy5Attack.y<playerY+playerHeight)) {
 				hitsound.start();
@@ -1269,7 +1273,30 @@ public class Game extends Thread {
 					
 		}
 	}
-
+	
+	public void enemy8Attack4Process() {
+		if(i % 60 == 0 && enemy8List.size() > 0) {
+		enemy8Attack4 = new Enemy8Attack4((int)(Math.random()*1261)+20,-209);
+		enemy8Attack4List.add(enemy8Attack4);
+		}
+		
+		for(int i = 0; i < enemy8Attack4List.size(); i++) {
+			enemy8Attack4 = enemy8Attack4List.get(i);
+			enemy8Attack4.fire();
+			
+			if((enemy8Attack4.x<playerX+playerWidth&&enemy8Attack4.x>playerX&&enemy8Attack4.y+enemy8Attack4.height>playerY&&enemy8Attack4.y+enemy8Attack4.height<playerY+playerHeight)||(enemy8Attack4.x<playerX+playerWidth&&enemy8Attack4.x>playerX&&enemy8Attack4.y>playerY&&enemy8Attack4.y<playerY+playerHeight)) {
+				hitsound.start();
+				playerHp -= enemy8Attack4.attack;
+				enemy8Attack4List.remove(enemy8Attack4);
+			}
+			if(playerHp <= 0) {
+				isOver = true;
+			}
+					
+			
+					
+		}
+	}
 	 
 	 
 	//게임 화면에 플레이어 캐릭터 그리기
@@ -1520,6 +1547,11 @@ public class Game extends Thread {
 			enemy8Attack3 = enemy8Attack3List.get(i);
 			g.drawImage(enemy8Attack3.image, enemy8Attack3.x, enemy8Attack3.y, null);
 		}
+		for(int i = 0; i < enemy8Attack4List.size(); i++) {
+			enemy8Attack4 = enemy8Attack4List.get(i);
+			g.drawImage(enemy8Attack4.image, enemy8Attack4.x, enemy8Attack4.y, null);
+		}
+		
 		
 	}
 
