@@ -107,6 +107,19 @@ public class Game extends Thread {
 	private Enemy6Warning enemy6Warning;
 	private Enemy6Attack3 enemy6Attack3;
 	
+	ArrayList<Enemy8> enemy8List = new ArrayList<Enemy8>();
+	ArrayList<Enemy8Attack> enemy8AttackList = new ArrayList<Enemy8Attack>();
+	ArrayList<Enemy8Attack2> enemy8Attack2List = new ArrayList<Enemy8Attack2>();
+	ArrayList<Enemy8Attack3> enemy8Attack3List = new ArrayList<Enemy8Attack3>();
+	ArrayList<Enemy8EmptyAttack> enemy8EmptyAttackList = new ArrayList<Enemy8EmptyAttack>();
+	ArrayList<Enemy8Warning> enemy8WarningList = new ArrayList<Enemy8Warning>();
+	private Enemy8 enemy8;
+	private Enemy8Attack enemy8Attack;
+	private Enemy8Attack2 enemy8Attack2;
+	private Enemy8Attack3 enemy8Attack3;
+	private Enemy8EmptyAttack enemy8EmptyAttack;
+	private Enemy8Warning enemy8Warning;
+	
 	//쓰레드가 시작하면(start()를 통해) run() 메소드 실행
 	public void run() {
 		/*게임을 60프레임으로 설정
@@ -144,7 +157,7 @@ public class Game extends Thread {
 				if(delta >= 1000000000/60) {
 					keyProcess();
 					playerAttackProcess();
-					if(score<=100) {
+	/*				if(score<=100) {
 						enemyAppearProcess();
 						enemyMoveProcess();
 						enemyAttackProcess();
@@ -215,15 +228,27 @@ public class Game extends Thread {
 							enemy6AttackProcess();
 							enemy6Attack2Process();
 							enemy6Attack3Process();
-						}
-					if(enemy7List.size() ==1)
-					System.out.println(enemy7.x);	
+						}*/
+					enemy8AppearProcess();
+					enemy8MoveProcess();
+					enemy8AttackProcess();
+					enemy8Attack2Process();
+					enemy8Attack3Process();
+					
+					
+					System.out.println(Math.sin(Math.toRadians(45)));	
 					i++; //공격속도 정하기 위해 만듦
 					delta = delta - (1000000000/60);
 
 				}
 				
 				
+			}
+			try {
+				sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			
 		}
@@ -252,11 +277,16 @@ public class Game extends Thread {
 		enemy6AttackList.clear();
 		enemy6Attack2List.clear();
 		enemy6WarningList.clear();
+		enemy8List.clear();
+		enemy8AttackList.clear();
+		enemy8Attack2List.clear();
+		enemy8Attack3List.clear();
+		enemy8WarningList.clear();
 		skillAttackList.clear();
 		
 		i=1;
 		
-		playerHp = 1000;
+		playerHp = 100;
 		playerX = 10;
 		playerY = (Main.SCREEN_HEIGHT - playerHeight) / 2;
 		playerAttackSpeed = 20;
@@ -415,6 +445,20 @@ public class Game extends Thread {
 					}
 						
 				}
+			}
+			
+			for(int j = 0; j < enemy8List.size(); j++) {
+				enemy8 = enemy8List.get(j);
+				if((playerAttack.x+playerAttack.width>enemy8.x+148&&playerAttack.x+playerAttack.width<enemy8.x+enemy8.width-122&&playerAttack.y+playerAttack.height>enemy8.y+136&&playerAttack.y+playerAttack.height<enemy8.y+enemy8.height-183)||(playerAttack.x+playerAttack.width>enemy8.x+148&&playerAttack.x+playerAttack.width<enemy8.x+enemy8.width-122&&playerAttack.y>enemy8.y+136&&playerAttack.y<enemy8.y+enemy8.height-183)) { //占쏙옙트占쌘쏙옙 占쏙옙占쏙옙(占쏙옙표 占쏙옙占쏙옙占쏙옙 占쌓삼옙 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏜서몌옙)
+					enemy8.hp -= playerAttack.attack; 
+					playerAttackList.remove(playerAttack); 
+				}
+				if(enemy8.hp <= 0) {
+					killsound.start();
+					enemy8List.remove(enemy8);
+					score += 1000;
+				}
+					
 			}
 		}
 		if(skill == true && i % 2 == 0 && skillAttackList.size() <= 50) {
@@ -971,7 +1015,7 @@ public class Game extends Thread {
 	}
 	
 	private void enemy5AttackProcess() {
-		if((i % 90 == 0 || i % 100 == 0) && enemy5List.size() > 0) {
+		if(i % 90 == 0 && enemy5List.size() > 0) {
 			for(int j = 0; j < enemy5List.size(); j++) {
 			enemy5Attack = new Enemy5Attack(enemy5List.get(j).x - 100 , enemy5List.get(j).y + 75);
 			enemy5AttackList.add(enemy5Attack);
@@ -980,7 +1024,7 @@ public class Game extends Thread {
 		
 		for(int i = 0; i < enemy5AttackList.size(); i++) {
 			enemy5Attack = enemy5AttackList.get(i);
-			enemy5Attack.fire();
+			enemy5Attack.move();
 			
 			if((enemy5Attack.x<playerX+playerWidth&&enemy5Attack.x>playerX&&enemy5Attack.y+enemy5Attack.height>playerY&&enemy5Attack.y+enemy5Attack.height<playerY+playerHeight)||(enemy5Attack.x<playerX+playerWidth&&enemy5Attack.x>playerX&&enemy5Attack.y>playerY&&enemy5Attack.y<playerY+playerHeight)) {
 				hitsound.start();
@@ -1123,6 +1167,108 @@ public class Game extends Thread {
 		
 		}
 	}
+	
+	private void enemy8AppearProcess() {
+		if(enemy8List.size() == 0) {
+			enemy8 = new Enemy8(1200, 200);
+			enemy8List.add(enemy8);
+		}
+	}
+	
+	private void enemy8MoveProcess() {
+		enemy8 = enemy8List.get(0);
+		if(enemy8.x > 800)
+		enemy8.move();
+	}
+	
+	private void enemy8AttackProcess() {
+		
+		if(i % 120 == 0 && enemy8List.size() > 0 ) {
+			
+			for(int j = 0; j < enemy8List.size(); j++) {
+			enemy8Warning = new Enemy8Warning((int)(Math.random()*601), 0);
+			enemy8WarningList.add(enemy8Warning);
+			Timer loadingTimer = new Timer();
+	        TimerTask loadingTask = new TimerTask() {
+	            @Override
+	            public void run() {
+	            	enemy8WarningList.remove(enemy8Warning);
+	            }
+	        };
+	        loadingTimer.schedule(loadingTask, 700);
+			}
+		}
+		
+		if(i % 120 == 40 && enemy8List.size() > 0 && enemy8WarningList.size() >= 1) {
+			for(int j = 0; j < enemy8List.size(); j++) {
+			enemy8Attack = new Enemy8Attack(enemy8Warning.x, 0);
+			enemy8AttackList.add(enemy8Attack);
+			
+			}
+		}
+		
+		if(i % 120 == 40 && enemy8List.size() > 0 && enemy8WarningList.size() >= 1) {
+			for(int j = 0; j < enemy8List.size(); j++) {
+			enemy8EmptyAttack = new Enemy8EmptyAttack(enemy8Warning.x, 0);
+			enemy8EmptyAttackList.add(enemy8EmptyAttack);
+			fireBreath = true;
+			}
+		}
+		
+		if(i % 120 == 100  && enemy8AttackList.size() >= 1) {
+			enemy8AttackList.remove(enemy8Attack);
+		}
+		
+		for(int i = 0; i < enemy8EmptyAttackList.size(); i++) {
+			enemy8EmptyAttack = enemy8EmptyAttackList.get(i);
+			if(this.i % 120 <=105 && this.i % 120 >= 100 && enemy8EmptyAttackList.get(i).y <= 1440)
+			enemy8EmptyAttack.fire();
+	
+			if((playerX+playerWidth/2>enemy8EmptyAttack.x&&playerX+10<enemy8EmptyAttack.x+enemy8EmptyAttack.width&&playerY+playerHeight>enemy8EmptyAttack.y&&playerY+playerHeight<enemy8EmptyAttack.y+enemy8EmptyAttack.height)||(playerX+playerWidth/2>enemy8EmptyAttack.x&&playerX+10<enemy8EmptyAttack.x+enemy8EmptyAttack.width&&playerY>enemy8EmptyAttack.y&&playerY<enemy8EmptyAttack.y+enemy8EmptyAttack.height)) {
+				hitsound.start();
+				playerHp -= enemy8Attack.attack;
+				enemy8EmptyAttackList.remove(enemy8EmptyAttack);
+			}
+			if(playerHp <= 0) {
+				isOver = true;
+			}
+			
+					
+		}
+		
+	}
+	private boolean fireBreath = false;
+	
+	public void enemy8Attack2Process() {
+		if(enemy8Attack2List.size() < 1) {
+		enemy8Attack2 = new Enemy8Attack2(0,enemy8.y);
+		enemy8Attack2List.add(enemy8Attack2);
+		}
+	}
+	
+	public void enemy8Attack3Process() {
+		if(i % 60 == 0 && enemy8List.size() > 0) {
+		enemy8Attack3 = new Enemy8Attack3(enemy8.x-20,enemy8.y);
+		enemy8Attack3List.add(enemy8Attack3);
+		}
+		
+		for(int i = 0; i < enemy8Attack3List.size(); i++) {
+			enemy8Attack3 = enemy8Attack3List.get(i);
+			enemy8Attack3.fire();
+			
+			if((enemy8Attack3.x<playerX+playerWidth&&enemy8Attack3.x>playerX&&enemy8Attack3.y+enemy8Attack3.height>playerY&&enemy8Attack3.y+enemy8Attack3.height<playerY+playerHeight)||(enemy8Attack3.x<playerX+playerWidth&&enemy8Attack3.x>playerX&&enemy8Attack3.y>playerY&&enemy8Attack3.y<playerY+playerHeight)) {
+				hitsound.start();
+				playerHp -= enemy8Attack3.attack;
+				enemy8Attack3List.remove(enemy8Attack3);
+			}
+			if(playerHp <= 0) {
+				isOver = true;
+			}
+					
+			
+					
+		}
+	}
 
 	 
 	 
@@ -1135,6 +1281,7 @@ public class Game extends Thread {
 		enemy4Draw(g);
 		enemy5Draw(g);
 		enemy6Draw(g);
+		enemy8Draw(g);
 		playerDraw(g);
 		infoDraw(g);
 	}
@@ -1314,6 +1461,8 @@ public class Game extends Thread {
 			
 		}
 		
+		
+		
 		for(int i = 0; i < enemy6AttackList.size(); i++) {
 			enemy6Attack = enemy6AttackList.get(i);
 			g.drawImage(enemy6Attack.image, enemy6Attack.x, enemy6Attack.y, null);
@@ -1337,6 +1486,39 @@ public class Game extends Thread {
 		for(int i = 0; i < enemy6Attack3List.size(); i++) {
 			enemy6Attack3 = enemy6Attack3List.get(i);
 			g.drawImage(enemy6Attack3.image, enemy6Attack3.x, enemy6Attack3.y, null);
+		}
+		
+	}
+	
+	public void enemy8Draw(Graphics g) {
+		for(int i= 0; i < enemy8List.size(); i++) {
+			enemy8 = enemy8List.get(i);
+			g.drawImage(enemy8.image, enemy8.x, enemy8.y, null);
+			g.setColor(Color.red);
+			g.fillRect(enemy8.x - 1, enemy8.y - 40, enemy8.hp *7, 20);
+			
+		}
+		for(int i = 0; i < enemy8AttackList.size(); i++) {
+			enemy8Attack = enemy8AttackList.get(i);
+			g.drawImage(enemy8Attack.image, enemy8Attack.x, enemy8Attack.y, null);
+		}
+		
+		for(int i = 0; i < enemy8EmptyAttackList.size(); i++) {
+			enemy8EmptyAttack = enemy8EmptyAttackList.get(i);
+			g.drawImage(enemy8EmptyAttack.image, enemy8EmptyAttack.x, enemy8EmptyAttack.y, null);
+		}
+		
+		for(int i = 0; i < enemy8WarningList.size(); i++) {
+			enemy8Warning = enemy8WarningList.get(i);
+			g.drawImage(enemy8Warning.image, enemy8Warning.x, enemy8Warning.y, null);
+		}
+		
+		if(fireBreath&&enemy8Attack2List.size() > 0) 
+			g.drawImage(enemy8Attack2.image, enemy8Attack2.x, enemy8Attack2.y, null);
+		
+		for(int i = 0; i < enemy8Attack3List.size(); i++) {
+			enemy8Attack3 = enemy8Attack3List.get(i);
+			g.drawImage(enemy8Attack3.image, enemy8Attack3.x, enemy8Attack3.y, null);
 		}
 		
 	}
